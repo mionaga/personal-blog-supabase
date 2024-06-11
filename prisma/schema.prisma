@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//ブログ記事テーブル
+model Article {
+  id                  Int                 @id @default(autoincrement())
+  title               String
+  content             String
+  thumbnailUrl        String
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  articleCategories  ArticleCategory[]
+}
+
+//カテゴリーテーブル
+model Category {
+  id            Int                   @id @default(autoincrement())
+  name          String
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  articles      ArticleCategory[]
+}
+
+//中間テーブル
+model ArticleCategory {
+  id            Int         @id @default(autoincrement())
+  articleId     Int
+  categoryId    Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  article       Article     @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  category      Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
