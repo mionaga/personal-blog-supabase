@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -32,13 +32,25 @@ export const GET = async (req: NextRequest) => {
 
 
 export const POST = async (req: Request, contexst: any) => {
-    try {
-        const body = await req.json();
-        const { title, content, categories, thumbnailUrl } = body;
+    const saveFile = async (file: File): Promise<string> => {
+        const url = URL.createObjectURL(file);
+        return url;
+    }
 
-        if (!title || !content || !categories || !thumbnailUrl) {
+    try {
+        // const body = await req.json();
+        // const { title, content, categories, thumbnailUrl } = body;
+        const formData = await req.formData();
+        const title = formData.get('title') as string;
+        const content = formData.get('content') as string;
+        const thumbnail = formData.get('thumbnail') as File;
+        const categories = formData.getAll('category') as string[];
+
+        if (!title || !content || !thumbnail) {
             return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });
         }
+
+        const thumbnailUrl = await saveFile(thumbnail);
 
         const data = await prisma.article.create({
             data: {
@@ -54,7 +66,7 @@ export const POST = async (req: Request, contexst: any) => {
                     categoryId: category.id,
                     articleId: data.id,
                 },
-            })
+            });
         }
 
         return NextResponse.json({
