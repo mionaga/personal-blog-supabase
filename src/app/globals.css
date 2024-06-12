@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* デフォルトのbodyスタイル */
 body {
-  /* position: relative; */
   min-height: 100%;
 }
 
@@ -23,3 +22,12 @@ body::before {
   min-height: 100%;
 }
 
+
+/* adminページ用のスタイル */
+.admin-bg {
+  background-color: #d7dbe0;
+}
+
+body.admin-bg::before {
+  display: none; 
+}

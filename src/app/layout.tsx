@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className="container mx-auto text-slate">
+      <body className="container mx-auto text-slate admin-bg">
         <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">

@@ -18,7 +18,7 @@ const Header = () => {
         <div>
             <nav>
                 {isAdminRoute && (
-                    <Link href='/articles/new' className='font-medium text-sm bg-orange-300 px-3 py-4 rounded-lg shadow-md hover:shadow-none'>記事を書く</Link>
+                    <Link href='/admin/articles/new' className='font-medium text-sm bg-orange-300 px-3 py-4 rounded-lg shadow-md hover:shadow-none'>記事を書く</Link>
                 )}
             </nav>
         </div>
