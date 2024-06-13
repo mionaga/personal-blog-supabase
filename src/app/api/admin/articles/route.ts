@@ -32,25 +32,11 @@ export const GET = async (req: NextRequest) => {
 
 
 export const POST = async (req: Request, contexst: any) => {
-    const saveFile = async (file: File): Promise<string> => {
-        const url = URL.createObjectURL(file);
-        return url;
-    }
+   
 
     try {
-        // const body = await req.json();
-        // const { title, content, categories, thumbnailUrl } = body;
-        const formData = await req.formData();
-        const title = formData.get('title') as string;
-        const content = formData.get('content') as string;
-        const thumbnail = formData.get('thumbnail') as File;
-        const categories = formData.getAll('category') as string[];
-
-        if (!title || !content || !thumbnail) {
-            return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });
-        }
-
-        const thumbnailUrl = await saveFile(thumbnail);
+        const body = await req.json();
+        const { title, content, categories, thumbnailUrl } = body;
 
         const data = await prisma.article.create({
             data: {
@@ -60,10 +46,10 @@ export const POST = async (req: Request, contexst: any) => {
             },
         })
 
-        for (const category of categories) {
+        for (const categoryID of categories) {
             await prisma.articleCategory.create({
                 data: {
-                    categoryId: category.id,
+                    categoryId: parseInt(categoryID),
                     articleId: data.id,
                 },
             });
@@ -75,6 +61,7 @@ export const POST = async (req: Request, contexst: any) => {
             id: data.id,
         })
     } catch (error) {
+        console.error('Error creating article:', error);
         if (error instanceof Error) {
             if (error.name === 'PrismaClientKnownRequestError') {
                 return NextResponse.json({ status: error.message }, { status: 400 });

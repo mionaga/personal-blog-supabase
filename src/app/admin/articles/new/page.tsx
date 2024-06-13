@@ -3,28 +3,37 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import ErrorMessage from '@/app/components/ErrorMessage';
-import { Category } from '@prisma/client';
 
 const CreateArticles = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>('');
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<{id: number, name: string}[]>([]);
   const [content, setContent] = useState<string>('');
-  const [thumbnailUrl, setThumbnailUrl] = useState<File | undefined>(undefined);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch('/api/admin/categories');
+      const data = await response.json();
+      setCategoryOptions(data.categories);
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     const allFieldFilled = 
       title.trim() !== '' && 
-      thumbnailUrl !== undefined && 
+      thumbnailUrl.trim() !== '' && 
       categories.length !== 0 && 
       content.trim() !== '';
 
     setIsDisabled(!allFieldFilled); 
-  }, [title, thumbnailUrl, content]);
+  }, [title, thumbnailUrl, categories, content]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,8 +41,7 @@ const CreateArticles = () => {
      // バリデーションチェック
      const newErrors: { [key: string]: string } = {};
      if (title.trim() === '') newErrors.title = 'タイトルが空欄です';
-     if (thumbnailUrl === undefined) newErrors.thumbnailUrl = '画像選択が空欄です';
-     if (categories.length === 0) newErrors.category = 'カテゴリー選択が空欄です';
+     if (categories.length === 0) newErrors.categories = 'カテゴリー選択が空欄です';
      if (content.trim() === '') newErrors.content = '本文が空欄です';
  
      if (Object.keys(newErrors).length > 0) {
@@ -44,20 +52,12 @@ const CreateArticles = () => {
     setErrors({});
     setLoading(true);
 
-    const API_URL = 'http://localhost:3000';
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('thumbnailUrl', thumbnailUrl!); 
-    formData.append('categories', selectedCategories); 
-
-    await fetch(`${API_URL}/api/admin/articles`, {
+    await fetch('/api/admin/articles', {
       method: 'POST',
-      body: formData,
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
-      // body: JSON.stringify({title, content, categories: category, thumbnailUrl})
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({title, content, categories, thumbnailUrl})
     });
 
     setLoading(false);
@@ -71,7 +71,7 @@ const CreateArticles = () => {
         <div className='bg-gray-700 p-6 rounded shadow-mg'>
           <h2 className='text-slate-50 text-2xl font-bold mb-4'>ブログ新規作成</h2>
 
-          <form encType='multipart/form-data' onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
 
             <div className='mb-4'>
               <label htmlFor="title" className='text-slate-300'>タイトル</label>
@@ -90,13 +90,12 @@ const CreateArticles = () => {
             <div className='mb-4'>
               <label htmlFor="thumbnailUrl" className='text-slate-300'>画像選択</label>
               <input 
-              type="file" 
+              type="text" 
               name="thumbnailUrl" 
               id="thumbnaiUrl"
               className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none bg-slate-50'
               onChange={e => {
-                const file = e.target.files?.[0];
-                setThumbnailUrl(file);
+                setThumbnailUrl(e.target.value);
               }}
               />
               {errors.thumbnailUrl && <ErrorMessage message={errors.thumbnailUrl} />}
@@ -108,17 +107,22 @@ const CreateArticles = () => {
               multiple
               name="category" 
               id="category"
-              value={selectedCategories}
               className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
-              onChange={(e) => handleChange((e.target.value as unknown) as number[])}
+              onChange={(e) => {
+                const selectedCategories = Array.from(e.target.selectedOptions, option => option.value);
+                setCategories(selectedCategories);
+              }}
               >
-                {categories.map((category) => {
-                  <CategoryItem key{category.id} value={category.id}>
-                    {category.name}
-                  </CategoryItem>
-                })}
+                {categoryOptions.map(option => (
+                  <option 
+                  key={option.id}
+                  value={option.id}>
+                    {option.name}
+                </option>
+                )
+                )}
               </select>
-              {errors.category && <ErrorMessage message={errors.category} />}
+              {errors.category && <ErrorMessage message={errors.categories} />}
             </div>
 
             <div className='mb-4'>
