@@ -1,15 +1,14 @@
 import Image from "next/image";
 import ArticleList from "./components/ArticleList";
+import { getArticles } from "./getters";
 
 export default async function Home() {
-  const API_URL = 'http://localhost:3000/';
-  const res = await fetch(`${API_URL}/api/admin/articles`, { cache: 'no-store' });
-  const articles = await res.json();
+  const articles = await getArticles();
 
   return (
-   <div className="md:flex">
-    <section className="w-full md:w-2/3">
-      <ArticleList articles={articles.articles} />
+   <div className="md:flex xl:mx-20 xl:gap-x-8">
+    <section className="w-full md:w-2/3 md:flex md:flex:col md:justify-center">
+      <ArticleList articles={articles} />
     </section>
     <aside className="w-full md:w-1/3 flex flex-col items-center px-3 md:pl-6">
         <div className="bg-white shadow-md rounded p-4 mb-6 mt-4">

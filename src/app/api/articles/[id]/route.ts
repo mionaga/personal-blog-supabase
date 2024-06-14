@@ -29,7 +29,11 @@ export const GET = async (
              },
         })
 
-        return NextResponse.json({ status: 'OK', article: article }, {status: 200})
+        if (!article) {
+            return NextResponse.json({ status: 'Not Found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ status: 'OK', article: article }, {status: 200});
     } catch (error) {
         if (error  instanceof Error)
         return NextResponse.json({ status: error.message }, { status: 500 });
