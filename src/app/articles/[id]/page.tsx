@@ -1,11 +1,39 @@
+import { getArticle } from '@/app/getters';
+import { Metadata, ResolvingMetadata } from 'next';
+import { notFound } from 'next/navigation';
 import React from 'react'
 
-const ビジターブログ詳細 = () => {
-  return (
-    <div>ビジターブログ詳細
-    
-    </div>
-  )
+export async function generateMetadata ({
+  params,
+}: {
+  params: { id: number };
+  parent?: ResolvingMetadata;
+}): Promise<Metadata> {
+
+  const article = await getArticle(params.id);
+
+  return {
+    title: article?.title,
+    description: article?.content,
+  }
 }
 
-export default ビジターブログ詳細;
+
+export default async function ArticleDetail({ 
+  params
+ }: {
+  params: { id: number };
+ }) {
+
+  const article = await getArticle(params.id);
+
+  if (!article) {
+    notFound();
+  }
+
+  return (
+    <>
+      <h3>{article.title}</h3>
+    </>
+  );
+}
