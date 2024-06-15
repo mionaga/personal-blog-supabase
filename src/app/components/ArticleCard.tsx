@@ -8,10 +8,9 @@ type ArticleCardProps = {
 }
 
 const ArticleCard = ({ article }:ArticleCardProps) => {
-    // console.log(article);
 
   return (
-    <article key={article.id} className='p-4 mb-3 w-full max-w-xl hover:opacity-75'>
+    <article key={article.id} className='m-5 mb-3 w-full max-w-xl shadow-sm hover:opacity-75 hover:shadow-none'>
         <Link href={`articles/${article.id}`}>
         <Image 
                 src={'/imges/girls-6615582_640.jpg'}
