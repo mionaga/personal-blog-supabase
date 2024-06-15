@@ -18,13 +18,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="ja">
-      <body className="container mx-auto text-slate admin-bg">
+      <body>
         <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
           <Suspense fallback={<Loading />}>
+         
             {children}
           </Suspense>
         </main>

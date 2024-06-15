@@ -1,10 +1,114 @@
 'use client'
 
+import { Category } from '@/types/category';
+import ErrorMessage from '@/app/components/ErrorMessage';
 import React from 'react'
+import SelectCategory from './SelectCategory';
+import Link from 'next/link';
 
-const ArticleForm = () => {
+type ArticleFormProps = {
+  title: string;
+  setTitle: (title: string) => void;
+  categories: Category[];
+  setCategories: ( categories: Category[] ) => void;
+  categoryOptions: { value: number, label: string }[];
+  setSelectedCategories: { id:number, name: string }[];
+  content: string
+  setContent: (content: string) => void;
+  thumbnailUrl: string
+  setThumbnailUrl: (thumbnailUrl: string) => void
+  loading: boolean;
+  errors: { [key: string]: string };
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const ArticleForm = ({
+  title,
+  setTitle,
+  categories,
+  setCategories,
+  setSelectedCategories,
+  content,
+  setContent, 
+  thumbnailUrl,
+  setThumbnailUrl,
+  loading,
+  errors,
+  handleSubmit,
+}: ArticleFormProps) => {
+
   return (
-    <div>ArticleForm</div>
+    <div className='min-h-screen px-4'>
+      <div className='p-6 text-slate-700'>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold mb-4">ブログ新規作成</h2>
+          <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold mb-4 text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer'>
+            <Link href={'/admin/articles'}>記事一覧画面へ</Link>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className='mb-4'>
+            <label htmlFor="title">タイトル</label>
+            <input 
+              type="text" 
+              name="title" 
+              id="title"
+              value={title}
+              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
+              onChange={e => setTitle(e.target.value)}
+            />
+            {errors.title && <ErrorMessage message={errors.title} />}
+          </div>
+
+          <div className='mb-4'>
+            <label htmlFor="thumbnailUrl">画像選択</label>
+            <input 
+              type="text" 
+              name="thumbnailUrl" 
+              id="thumbnaiUrl"
+              value={thumbnailUrl}
+              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none bg-slate-50'
+              onChange={e => setThumbnailUrl(e.target.value)}
+            />
+            {errors.thumbnailUrl && <ErrorMessage message={errors.thumbnailUrl} />}
+          </div>
+
+          <div className='mb-4'>
+           <SelectCategory
+              categories={categories} 
+              setCategories={setCategories}
+              setSelectedCategories={setSelectedCategories}
+              errors={errors}
+            />
+          </div>
+
+          <div className='mb-4'>
+            <label htmlFor="content">本文</label>
+            <textarea 
+              name="content" 
+              id="content"
+              value={content}
+              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none h-40'
+              onChange={e => setContent(e.target.value)}
+            />
+            {errors.content && <ErrorMessage message={errors.content} />}
+          </div>
+
+          <button
+            type='submit'
+            className={`py-2 px-4 rounded-md text-slate-50 ${
+              loading
+              ? 'bg-orange-200 cursor-not-allowed'
+              : 'bg-orange-400 hover:bg-orange-500'
+            }`}
+            disabled={loading}
+          >
+            {loading ? '投稿中...' : '投稿'}
+          </button>
+        </form>
+      </div>
+    </div>
   )
 }
 
