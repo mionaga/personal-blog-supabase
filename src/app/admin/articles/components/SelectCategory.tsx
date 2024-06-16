@@ -9,7 +9,8 @@ import ReactSelect from 'react-select';
 type SelectCategoryrops = {
     categories: Category[];
     setCategories: ( categories: Category[] ) => void;
-    setSelectedCategories: { id:number, name: string }[];
+    selectedCategories: { id: number, name: string }[];
+    setSelectedCategories: (categories: { id:number, name: string }[]) => void;
     errors: { [key: string]: string };
   }
   
@@ -17,6 +18,7 @@ type SelectCategoryrops = {
 const SelectCategory = ({
     categories, 
     setCategories,
+    selectedCategories,
     setSelectedCategories,
     errors,
  }: SelectCategoryrops) => {
@@ -42,9 +44,8 @@ const SelectCategory = ({
         name: option.label,
       }));
       setSelectedCategories(transformedOptions);
-      console.log(transformedOptions);
     }
-  };
+  }
 
   return (
     <>
@@ -56,6 +57,10 @@ const SelectCategory = ({
         options={categoryOptions}
         placeholder='選択してください'
         isMulti
+        value={selectedCategories.map(category => ({
+           vallue: category.id,
+           label: category.name
+            }))}
         onChange={(options) => (options ? handleChange([...options]) : null)}
     />
     {errors.categories && <ErrorMessage message={errors.categories} />}
