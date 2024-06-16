@@ -1,13 +1,19 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import CategoryForm from '../components/CategoryForm';
 
 const NewCategory = () => {
-  const [name, setName] = useState('');
+  const router = useRouter();
+  const [name, setName] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     await fetch("/api/admin/categories", {
       method: 'POST',
@@ -16,8 +22,10 @@ const NewCategory = () => {
       },
       body: JSON.stringify({name})
     })
-    console.log('Category created:', name);
-    setName(''); 
+    
+    setLoading(false);
+    router.push('/admin/categories');
+    router.refresh();
   }
 
   return (
@@ -29,21 +37,12 @@ const NewCategory = () => {
           <Link href={'/admin/categories/'}>サイトトップに戻る</Link>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">カテゴリー名</label>
-          <input 
-          type="text"
-          name="name"
-          id="name"
-          onChange={e => setName(e.target.value)}  
+        <CategoryForm 
+          name={name} 
+          setName={setName}
+          handleSubmit={handleSubmit}
+          loading={loading}  
         />
-        </div>
-        <button type='submit'>
-          作成
-        </button>
-      </form>
-      <div>登録済みカテゴリー一覧</div>
       </div>
     </>
   )

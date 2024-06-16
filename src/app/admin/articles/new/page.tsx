@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import ArticleForm from '../components/ArticleForm';
+import { postingValidate } from '../components/PostingValidate';
 
 const CreateArticles = () => {
  
@@ -18,16 +19,13 @@ const CreateArticles = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // バリデーションチェック
-    const newErrors: { [key: string]: string } = {};
-    if (title.trim() === '') newErrors.title = 'タイトルが空欄です';
-    if (selectedCategories.length === 0) newErrors.categories = 'カテゴリーが選択されていません。';
-    if (content.trim() === '') newErrors.content = '本文が空欄です';
-
+    // ヴァリデーションチェック
+    const newErrors = postingValidate(title, selectedCategories, content);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
+
     setErrors({});
     setLoading(true);
 
@@ -62,6 +60,7 @@ const CreateArticles = () => {
       setTitle={setTitle}
       categories={categories}
       setCategories={setCategories}
+      selectedCategories={selectedCategories}
       setSelectedCategories={setSelectedCategories}
       content={content}
       setContent={setContent}

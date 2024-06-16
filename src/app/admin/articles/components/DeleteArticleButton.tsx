@@ -19,7 +19,7 @@ const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
 
   return (
     <div
-    className='text-red-700 hover:text-red-600 font-semibold text-lg cursor-pointer mt-3'
+    className='text-red-700 hover:text-red-600 font-semibold text-lg cursor-pointer'
     onClick={handleRemove}
     >削除</div>
   )
