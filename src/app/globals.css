@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* デフォルトのbodyスタイル */
 body {
   min-height: 100%;
+  background-color: #f4f4f5;
 }
 
-body::before {
+/* Homeページ用のスタイル */
+body::before{
   content: '';
   position: fixed;
   top: 0;
@@ -18,16 +19,10 @@ body::before {
   background-size: cover;
   background-position: center;
   filter: blur(3px); /* ぼかし効果を適用 */
-  z-index: -1;
+  z-index: -1; 
   min-height: 100%;
-}
+ } 
 
-
-/* adminページ用のスタイル */
-.admin-bg {
-  background-color: #d7dbe0;
-}
-
-body.admin-bg::before {
+/* body.admin-bg::before {
   display: none; 
-}
+} */ 

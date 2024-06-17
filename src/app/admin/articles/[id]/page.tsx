@@ -1,9 +1,21 @@
 import React from 'react'
+import DeleteArticleButton from '../components/DeleteArticleButton';
+import { getAdminArticle } from '@/app/getters';
+import { notFound } from 'next/navigation'
 
-const admin用詳細ページ = () => {
+
+const EditArticle = async ({ params }: { params: { id: string } }) => {
+    const article = await getAdminArticle(params.id);
+    if (!article) {
+      notFound();
+    }
+
   return (
-    <div>admin用詳細ページ</div>
+    <>
+
+      <DeleteArticleButton id={article.id} />
+    </>
   )
 }
 
-export default admin用詳細ページ
+export default EditArticle;

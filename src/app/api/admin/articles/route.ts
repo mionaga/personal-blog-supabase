@@ -71,3 +71,22 @@ export const POST = async (req: Request, contexst: any) => {
         return NextResponse.json({ status: 'Unknown error' }, { status: 500 });
     }
 }
+
+export const DELETE = async (
+    request: NextRequest,
+    { params }: { params: { id: string } },
+) => {
+    const id = params.id;
+
+    try {
+        await prisma.article.delete({
+            where: {
+                id: parseInt(id),
+            },
+        })
+        return NextResponse.json({ status: 'ok' }, { status: 200 })
+    } catch (error) {
+        if (error instanceof Error)
+            return NextResponse.json({ status: error.message }, { status: 400 })
+    }
+}
