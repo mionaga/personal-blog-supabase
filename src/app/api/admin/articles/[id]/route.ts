@@ -44,6 +44,8 @@ export const PUT = async (
     const id = params.id;
     const { title, content, categories, thumbnailUrl } = await req.json()
 
+    console.log('Received PUT data:', { title, content, categories, thumbnailUrl });
+
     if (!title || !content || !categories || !thumbnailUrl) {
         return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });
     };
@@ -66,14 +68,15 @@ export const PUT = async (
             },
         })
 
-        for (const category of categories) {
+        for (const categoryID of categories) {
             await prisma.articleCategory.create({
                 data: {
-                    categoryId: category.id,
+                    categoryId: parseInt(categoryID),
                     articleId: article.id,
                 },
-            })
+            });
         }
+
 
        return NextResponse.json({ status: 'OK', article: article }, { status: 200 })
     } catch (error) {

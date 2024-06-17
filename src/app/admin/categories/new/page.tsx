@@ -4,15 +4,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import CategoryForm from '../components/CategoryForm';
+import { categoryValidate } from '../../articles/components/PostingValidate';
 
 const NewCategory = () => {
   const router = useRouter();
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const newErrors = categoryValidate(name);
+    if (Object.keys(newErrors).length >0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
     setLoading(true);
 
     await fetch("/api/admin/categories", {
@@ -41,7 +50,8 @@ const NewCategory = () => {
           name={name} 
           setName={setName}
           handleSubmit={handleSubmit}
-          loading={loading}  
+          loading={loading} 
+          errors={errors} 
         />
       </div>
     </>

@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import CategoryForm from '../components/CategoryForm';
+import { categoryValidate } from '../../articles/components/PostingValidate';
 
 const EditCategory = ({params}: {params: { id: string }}) => {
   const router = useRouter();
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const id = params.id;
 
   useEffect(() => {
@@ -23,6 +25,14 @@ const EditCategory = ({params}: {params: { id: string }}) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const newErrors = categoryValidate(name);
+    if (Object.keys(newErrors).length >0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
     setLoading(true);
 
     await fetch(`/api/admin/categories/${id}`, { 
@@ -53,6 +63,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
           setName={setName}
           handleSubmit={handleSubmit}
           loading={loading}  
+          errors={errors}
         />
       </div>
     </>
