@@ -9,7 +9,7 @@ const Header = () => {
     const isAdminRoute = pathname.includes('/admin');
 
   return (
-    <header className='py-5 px-10 border-b flex justify-between'>
+    <header className={`py-5 px-10 flex justify-between ${isAdminRoute ? 'bg-slate-600 text-slate-50' : 'border-b' }`}>
         <div>
             <h1 className='text-2xl font-extrabold'>
                 <Link href='/'>Blog</Link>
