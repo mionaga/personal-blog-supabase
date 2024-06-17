@@ -1,5 +1,7 @@
-import { getArticle } from '@/app/getters';
+import { getArticle, getCategories } from '@/app/getters';
 import { Metadata, ResolvingMetadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
@@ -26,14 +28,45 @@ export default async function ArticleDetail({
  }) {
 
   const article = await getArticle(params.id);
+  const categories = await getCategories();
 
   if (!article) {
     notFound();
   }
 
+  // 
+  const categoryIds = article.articleCategories.map(e => e.categoryId);
+  const categoryNames = categories
+    .filter(category => categoryIds.includes(category.id))
+    .map(category => category.name);
+
+
   return (
-    <>
-      <h3>{article.title}</h3>
-    </>
+    <div className='flex flex-row p-6'>
+      <div className="md:basis-1/6"></div>
+      <div className="md:basis-4/6 mt-10 p-5 md:p-10 bg-gray-300 rounded">
+        <Image 
+          src={'/imges/girls-6615582_640.jpg'}
+          alt='Article Image'
+          height={300}
+          width={1280}
+          className='rounded'
+        />
+        <div className='flex justify-start my-10 gap-5'>
+          <h2 className='text-4xl italic px-4'>{article.title}</h2>
+          {categoryNames.map((name, index) => (
+            <p key={index} className='text-blue-700 text-xl font-bold pt-3'>{name}</p>
+          ))}
+        </div>
+        
+        <div className="text-lg align-middle whitespace-break-spaces leading-relaxed text-justify px-4 mb-3">{article.content}</div>
+        <div className='p-2 flex justify-end mt-6'>
+          <Link href='/'>
+            <p className=' bg-slate-200 p-3 rounded-full'>ブログ一覧ページへ戻る</p>  
+          </Link>
+        </div>
+      </div>
+      <div className="md:basis-1/6"></div>
+    </div>
   );
 }

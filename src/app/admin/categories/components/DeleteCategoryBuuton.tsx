@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useState } from 'react'
 
 type DeleteCategoryButtonProps = {
     id: string;
@@ -9,11 +9,15 @@ type DeleteCategoryButtonProps = {
 
 const DeleteCategoryButton = ({ id }: DeleteCategoryButtonProps) => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const handleRemove = async () => {
+        setLoading(true);
+
         await fetch(`/api/admin/categories/${id}`, { method: 'DELETE' });
 
-        router.push('/admin/articles');
+        setLoading(false);
+        router.push('/admin/categories');
         router.refresh();
     }
 

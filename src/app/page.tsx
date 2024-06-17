@@ -7,7 +7,7 @@ export default async function Home() {
   const articles = await getArticles();
 
   return (
-   <div className="md:flex xl:mx-20 xl:gap-x-8 mt-3">
+   <div className="container mx-auto md:flex xl:mx-20 xl:gap-x-8 mt-3">
     <section className="w-full md:w-2/3 md:flex md:flex:col md:justify-center">
       <ArticleList articles={articles} />
     </section>

@@ -7,12 +7,14 @@ import SelectCategory from './SelectCategory';
 import Link from 'next/link';
 
 type ArticleFormProps = {
+  mode: 'new' | 'edit';
   title: string;
   setTitle: (title: string) => void;
   categories: Category[];
   setCategories: ( categories: Category[] ) => void;
-  categoryOptions: { value: number, label: string }[];
-  setSelectedCategories: { id:number, name: string }[];
+  // categoryOptions: { value: number, label: string }[];
+  selectedCategories: { id: number, name: string }[];
+  setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
   setContent: (content: string) => void;
   thumbnailUrl: string
@@ -23,10 +25,12 @@ type ArticleFormProps = {
 }
 
 const ArticleForm = ({
+  mode,
   title,
   setTitle,
   categories,
   setCategories,
+  selectedCategories,
   setSelectedCategories,
   content,
   setContent, 
@@ -41,7 +45,9 @@ const ArticleForm = ({
     <div className='min-h-screen px-4'>
       <div className='p-6 text-slate-700'>
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold mb-4">ブログ新規作成</h2>
+          <h2 className="text-2xl font-bold mb-4">
+            {mode === 'new' ? 'ブログ新規作成' : 'ブログ編集'}
+          </h2>
           <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold mb-4 text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer'>
             <Link href={'/admin/articles'}>記事一覧画面へ</Link>
           </div>
@@ -78,21 +84,26 @@ const ArticleForm = ({
            <SelectCategory
               categories={categories} 
               setCategories={setCategories}
+              selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
               errors={errors}
             />
           </div>
 
           <div className='mb-4'>
-            <label htmlFor="content">本文</label>
+            <label htmlFor="content">本文入力欄</label>
             <textarea 
               name="content" 
               id="content"
               value={content}
-              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none h-40'
+              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none h-30'
               onChange={e => setContent(e.target.value)}
             />
             {errors.content && <ErrorMessage message={errors.content} />}
+          </div>
+
+          <div className='mb-4 px-10 py-6 bg-slate-50 text-lg align-middle whitespace-break-spaces leading-relaxed text-justify '>
+            {content}
           </div>
 
           <button

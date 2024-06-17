@@ -1,6 +1,9 @@
 import React from 'react'
+import { getCategories } from '../getters'
 
-const TopAside = () => {
+const TopAside = async () => {
+    const categories = await getCategories();
+
   return (
     <>
         <div className="bg-white shadow-md rounded p-4 mb-6 mt-4">
@@ -13,18 +16,15 @@ const TopAside = () => {
         <div className="bg-white shadow-md rounded p-4 mb-6 mt-4 w-full">
             <h3 className="font-bold text-gray-900 mb-2">Category</h3>
             <ul className="text-gray-600 mt-2">
-            <li>
-                <a href="#">Technology</a>
-            </li>
-            <li>
-                <a href="#">Automotive</a>
-            </li>
-            <li>
-                <a href="#">Finance</a>
-            </li>
-            <li>
-                <a href="#">Sports</a>
-            </li>
+            {categories.map(category => (
+                <li 
+                    key={category.id}
+                    className='px-2'
+                    // onClick={{onSelectCategory(category.id)}} 
+                     >
+                    {category.name}
+                </li>
+            ))}
             </ul>
         </div>
     </>
