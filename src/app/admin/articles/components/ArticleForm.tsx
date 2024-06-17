@@ -12,7 +12,6 @@ type ArticleFormProps = {
   setTitle: (title: string) => void;
   categories: Category[];
   setCategories: ( categories: Category[] ) => void;
-  // categoryOptions: { value: number, label: string }[];
   selectedCategories: { id: number, name: string }[];
   setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
@@ -61,7 +60,7 @@ const ArticleForm = ({
               name="title" 
               id="title"
               value={title}
-              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
+              className='shadow-md border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
               onChange={e => setTitle(e.target.value)}
             />
             {errors.title && <ErrorMessage message={errors.title} />}
@@ -74,7 +73,7 @@ const ArticleForm = ({
               name="thumbnailUrl" 
               id="thumbnaiUrl"
               value={thumbnailUrl}
-              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none bg-slate-50'
+              className='shadow-md border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
               onChange={e => setThumbnailUrl(e.target.value)}
             />
             {errors.thumbnailUrl && <ErrorMessage message={errors.thumbnailUrl} />}
@@ -96,13 +95,13 @@ const ArticleForm = ({
               name="content" 
               id="content"
               value={content}
-              className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none h-30'
+              className='shadow-md border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none h-30'
               onChange={e => setContent(e.target.value)}
             />
             {errors.content && <ErrorMessage message={errors.content} />}
           </div>
 
-          <div className='mb-4 px-10 py-6 bg-slate-50 text-lg align-middle whitespace-break-spaces leading-relaxed text-justify '>
+          <div className='mb-4 px-10 py-6 bg-zinc-100 text-lg align-middle whitespace-break-spaces leading-relaxed text-justify '>
             {content}
           </div>
 

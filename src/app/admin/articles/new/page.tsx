@@ -3,13 +3,14 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import ArticleForm from '../components/ArticleForm';
-import { postingValidate } from '../components/PostingValidate';
+import { articleValidate } from '../components/PostingValidate';
+import { Category } from '@/types/category';
 
 const CreateArticles = () => {
  
   const router = useRouter();
   const [title, setTitle] = useState<string>('');
-  const [categories, setCategories] = useState<[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<{id:number, name:string}[]>([]);
   const [content, setContent] = useState<string>('');
   const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
@@ -20,7 +21,7 @@ const CreateArticles = () => {
     e.preventDefault();
 
     // ヴァリデーションチェック
-    const newErrors = postingValidate(title, selectedCategories, content);
+    const newErrors = articleValidate(title, selectedCategories, content);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -36,17 +37,24 @@ const CreateArticles = () => {
       thumbnailUrl
     };
 
+    console.log(articleData);
+
+
     try {
-      await fetch('/api/admin/articles', {
+      const response = await fetch('/api/admin/articles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(articleData)
       });
+      console.log(response);
+
+      const createdArticle = await response.json();
+      const newArticleId = createdArticle.id;
 
       setLoading(false);
-      router.push(`/admin/articles`);
+      router.push(`/articles/${newArticleId}`);
       router.refresh();
     } catch (error) {
       console.error('Error creating article:', error);
@@ -55,7 +63,8 @@ const CreateArticles = () => {
   }
 
   return (
-    <ArticleForm 
+    <ArticleForm
+      mode='new' 
       title={title}
       setTitle={setTitle}
       categories={categories}

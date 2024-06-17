@@ -1,5 +1,6 @@
 'use client'
 
+import ErrorMessage from '@/app/components/ErrorMessage';
 import React from 'react'
 
 type CategoryFormProps = {
@@ -7,9 +8,10 @@ type CategoryFormProps = {
     setName: (name: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
     loading: boolean;
+    errors: { [key: string]: string };
 }
 
-const CategoryForm = ({ name, setName, handleSubmit, loading }:CategoryFormProps) => {
+const CategoryForm = ({ name, setName, handleSubmit, loading, errors }:CategoryFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
         <div className='mb-4'>
@@ -22,6 +24,7 @@ const CategoryForm = ({ name, setName, handleSubmit, loading }:CategoryFormProps
             onChange={e => setName(e.target.value)}
             className='shadow border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
         />
+        {errors.name && <ErrorMessage message={errors.name} />}
         </div>
         <button 
             type='submit'
