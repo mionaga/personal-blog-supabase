@@ -5,7 +5,6 @@ type SelectedCategoryProps = {
 }
 
 const SelectedCategoy = async ({ category }: SelecteCategoryProps) => {
-    console.log(category);
     return (
         <div>{category.name}</div>
     )
