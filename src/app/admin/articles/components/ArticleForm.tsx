@@ -41,7 +41,7 @@ const ArticleForm = ({
 }: ArticleFormProps) => {
 
   return (
-    <div className='min-h-screen px-4'>
+    <div className='min-h-screen sm:px-4'>
       <div className='p-6 text-slate-700'>
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold mb-4">
@@ -101,7 +101,7 @@ const ArticleForm = ({
             {errors.content && <ErrorMessage message={errors.content} />}
           </div>
 
-          <div className='mb-4 px-10 py-6 bg-zinc-100 text-lg align-middle whitespace-break-spaces leading-relaxed text-justify '>
+          <div className='mb-4 px-3 sm:px-10 py-2 sm:py-6 bg-zinc-100 text-lg align-middle whitespace-break-spaces leading-relaxed text-justify '>
             {content}
           </div>
 
