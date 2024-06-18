@@ -31,7 +31,7 @@ const AdminLayout = ({children}:{children: React.ReactNode}) => {
         </Link>
         </aside>
 
-        <div className='p-4 md:w-2/3 w-full bg-stone-200 min-h-svh'>{children}</div>
+        <div className='sm:p-4 md:w-2/3 w-full bg-stone-200 min-h-svh'>{children}</div>
 
     </div>
   )

@@ -54,7 +54,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
       <div className="py-3 px-4">
       <div className="sm:flex justify-between items-center mb-8">
         <h2 className="text-xl font-bold ml-2">カテゴリー編集</h2>
-        <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer'>
+        <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer mt-3'>
           <Link href={'/admin/categories/'}>サイトトップに戻る</Link>
         </div>
       </div>
