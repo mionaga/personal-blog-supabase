@@ -1,9 +1,7 @@
 const API_URL = 'http://localhost:3000/api'
 
 export const getArticles = async () => {
-    const res = await fetch(API_URL + '/articles',
-         { cache: 'no-store' }
-        );
+    const res = await fetch(API_URL + '/articles');
    
           const articles = await res.json();
           return articles.articles;
@@ -28,9 +26,7 @@ export const getAdminArticles = async () => {
 }
 
 export const getAdminArticle = async (id: string) => {
-  const res = await fetch(`${API_URL}/admin/articles/${id}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${API_URL}/admin/articles/${id}`);
 
   const article = await res.json();
   return article.article;
