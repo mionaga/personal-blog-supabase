@@ -11,8 +11,8 @@ export default async function Page() {
   return (
     <div className="py-3 px-4">
       <div className="sm:flex justify-between items-center mb-8">
-        <h1 className="text-xl font-bold ml-2">記事一覧</h1>
-        <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer sm:mt-3'>
+        <h1 className="md:text-xl font-bold ml-2">記事一覧</h1>
+        <div className='bg-stone-300 px-5 py-2 rounded-sm font-bold text-slate-600 hover:bg-stone-500 hover:text-white cursor-pointer mt-3'>
           <Link href={'/'}>サイトトップに戻る</Link>
         </div>
       </div>
@@ -20,7 +20,7 @@ export default async function Page() {
       <div className="">
         {articles.map((article) => {
           return (
-            <div className="border-b border-gray-300 p-4 hover:bg-gray-100 cursor-pointer flex justify-between gap-20">
+            <div className="border-b border-gray-300 p-4 hover:bg-gray-100 cursor-pointer sm:flex justify-between gap-20">
               <div className="sm:w-4/5 md:w-2/3 sm:flex justify-between">
 
                 <Link href={`/admin/articles/${article.id}`} key={article.id}>
