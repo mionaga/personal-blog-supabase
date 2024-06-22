@@ -1,3 +1,4 @@
+import ImageFetcher from '@/app/components/ImageFetcher';
 import { getArticle, getCategories } from '@/app/getters';
 import { Metadata, ResolvingMetadata } from 'next';
 import Image from 'next/image';
@@ -34,7 +35,6 @@ export default async function ArticleDetail({
     notFound();
   }
 
-  // 
   const categoryIds = article.articleCategories.map(e => e.categoryId);
   const categoryNames = categories
     .filter(category => categoryIds.includes(category.id))
@@ -45,13 +45,15 @@ export default async function ArticleDetail({
     <div className='flex flex-row p-6'>
       <div className="md:basis-1/6"></div>
       <div className="md:basis-4/6 mt-10 p-5 md:p-10 bg-gray-300 rounded">
-        <Image 
-          src={'/imges/girls-6615582_640.jpg'}
-          alt='Article Image'
-          height={300}
-          width={1280}
-          className='rounded'
-        />
+        {article.thumbnailImageKey && (
+          <ImageFetcher 
+            thumbnailImageKey={article.thumbnailImageKey}
+            alt='Article Image'
+            width={800}
+            height={300}
+            className='rounded'
+          />
+        )}
         <div className='flex justify-start my-10 gap-5'>
           <h2 className='text-4xl italic px-4'>{article.title}</h2>
           {categoryNames.map((name, index) => (

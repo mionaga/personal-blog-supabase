@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export const GET = async (
-    req: NextRequest,
+    req: Request,
     { params }: { params: { id: string} },
 ) => {
     const id = params.id
@@ -38,15 +38,15 @@ export const GET = async (
 
 
 export const PUT = async (
-    req: NextRequest,
+    req: Request,
     { params }: { params: { id: string } }, 
 ) => {
     const id = params.id;
-    const { title, content, categories, thumbnailUrl } = await req.json()
+    const { title, content, categories, thumbnailImageKey } = await req.json()
 
-    console.log('Received PUT data:', { title, content, categories, thumbnailUrl });
+    console.log('Received PUT data:', { title, content, categories, thumbnailImageKey });
 
-    if (!title || !content || !categories || !thumbnailUrl) {
+    if (!title || !content || !categories || !thumbnailImageKey) {
         return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });
     };
 
@@ -58,7 +58,7 @@ export const PUT = async (
             data: {
                 title,
                 content,
-                thumbnailUrl,
+                thumbnailImageKey,
             },
         })
 
@@ -86,7 +86,7 @@ export const PUT = async (
 } 
 
 export const DELETE = async (
-    req: NextRequest,
+    req: Request,
     { params }: { params: { id: string } }, 
 ) => {
     const id = params.id;

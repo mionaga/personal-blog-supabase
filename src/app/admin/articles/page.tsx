@@ -3,9 +3,11 @@ import React from 'react'
 import Image from 'next/image'
 import { getAdminArticles } from '@/app/getters'
 import DeleteArticleButton from './components/DeleteArticleButton'
+import ImageFetcher from '@/app/components/ImageFetcher'
+import { Article } from '@mui/icons-material'
 
 export default async function Page() {
-  
+
   const articles = await getAdminArticles();
 
   return (
@@ -20,7 +22,7 @@ export default async function Page() {
       <div className="">
         {articles.map((article) => {
           return (
-            <div className="border-b border-gray-300 p-4 hover:bg-gray-100 cursor-pointer sm:flex justify-between gap-20">
+            <div key={article.id} className="border-b border-gray-300 p-4 hover:bg-gray-100 cursor-pointer sm:flex justify-between gap-20">
               <div className="sm:w-4/5 md:w-2/3 sm:flex justify-between">
 
                 <Link href={`/admin/articles/${article.id}`} key={article.id}>
@@ -36,7 +38,15 @@ export default async function Page() {
 
                 <Link href={`/admin/articles/${article.id}`} key={article.id}>
                   <div>
-                    <Image src={'/imges/girls-6615582_640.jpg'} alt='blog-image' height={50} width={80} className=''></Image>
+                    {article.thumbnailImageKey && (
+                      <ImageFetcher
+                        thumbnailImageKey={article.thumbnailImageKey}
+                        alt={'Article Image'}
+                        width={50}
+                        height={50}
+                        className=''
+                      />
+                    )}
                   </div>
                 </Link>
 

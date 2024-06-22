@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Home, EditNote, Summarize, Dns } from '@mui/icons-material';
+import { Home, EditNote, Summarize, Dns, Logout } from '@mui/icons-material';
 import { Button, Drawer as MuiDrawer, Box, List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
 
 const menu = [
@@ -13,19 +13,20 @@ const menu = [
 
 type DrawerProps = {
   isAdminRoute: boolean;
+  handleLogout: () => void;
 }
 
-const HeaderDrawer = ({isAdminRoute}: DrawerProps) => {
+const HeaderDrawer = ({isAdminRoute, handleLogout}: DrawerProps) => {
     const [show, setShow] = useState<boolean>(false);
     const handleDraw = () => setShow(!show);
 
   return (
     <>
-    <Button onClick={handleDraw} variant="text" className='p-0 min-w-min'>
-      <div className='flex flex-col justify-around w-7 h-6 sm:w-10'>
-        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-teal-600' }`}></div>
-        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-teal-600' }`}></div>
-        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-teal-600' }`}></div>
+    <Button onClick={handleDraw} variant="text" className={`w-full p-2 min-w-min ${isAdminRoute? 'bg-gray-600' : 'bg-gray-100'}`}>
+      <div className='flex flex-col justify-around w-8 h-6 sm:w-10'>
+        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-gray-600'}`}></div>
+        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-gray-600'}`}></div>
+        <div className={`w-full h-1 ${isAdminRoute? 'bg-slate-50' : 'bg-gray-600'}`}></div>
       </div>
     </Button>
     <MuiDrawer anchor='right' open={show} onClose={handleDraw}>
@@ -42,6 +43,12 @@ const HeaderDrawer = ({isAdminRoute}: DrawerProps) => {
               </ListItem>
             )
           })}
+          <ListItem>
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon><Logout /></ListItemIcon>
+              <ListItemText primary='ログアウト' />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Box>
     </MuiDrawer>

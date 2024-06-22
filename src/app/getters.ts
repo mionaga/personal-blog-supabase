@@ -1,4 +1,11 @@
+import { useSupabaseSessions } from "./_hooks/useSupabaseHooks";
+
 const API_URL = 'http://localhost:3000/api'
+
+const fetchToken = () => {
+  const { token } = useSupabaseSessions();
+  return token;
+};
 
 export const getArticles = async () => {
     const res = await fetch(API_URL + '/articles');
@@ -17,12 +24,10 @@ export const getArticle = async (id: string) => {
 }
 
 export const getAdminArticles = async () => {
-  const res = await fetch(`${API_URL}/admin/articles`,
-       { cache: 'no-store' }
-      );
+  const res = await fetch(`${API_URL}/admin/articles`, { cache: 'no-store' });
  
-        const articles = await res.json();
-        return articles.articles;
+    const articles = await res.json();
+    return articles.articles;
 }
 
 export const getAdminArticle = async (id: string) => {
@@ -33,16 +38,14 @@ export const getAdminArticle = async (id: string) => {
 }
 
 export const getCategories = async () => {
-    const res = await fetch(`${API_URL}/admin/categories`,
-         { cache: 'no-store' }
-        );
-          const categories = await res.json();
-          return categories.categories;
+  const res = await fetch(`${API_URL}/admin/categories`, { cache: 'no-store' });
+    const categories = await res.json();
+    return categories.categories;
 }
 
 export const getCategory = async (id: string) => {
   const res = await fetch(`${API_URL}/admin/categories/${id}`, {
-    next: { revalidate: 60 },
+   next: { revalidate: 60 },
   });
 
   const category = await res.json();
