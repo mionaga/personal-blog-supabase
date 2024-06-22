@@ -3,8 +3,15 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { useRouteGuard } from '../_hooks/useSupabaseHooks';
 
-const AdminLayout = ({children}:{children: React.ReactNode}) => {
+const AdminLayout = ({
+  children,
+}:{
+  children: React.ReactNode
+}) => {
+    useRouteGuard();
+
     const pathname = usePathname();
     const isSelected = (href: string) => {
         return pathname.includes(href)

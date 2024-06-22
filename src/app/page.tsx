@@ -32,6 +32,7 @@ export default function Home() {
     fetchTopData();
   }, []);
 
+
   const handleClick = (selectedId: number) => {
     const selectedCategory = categories.filter(c => selectedId === c.id)
     if (selectedCategory.length >0) {

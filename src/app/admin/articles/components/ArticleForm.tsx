@@ -2,9 +2,10 @@
 
 import { Category } from '@/types/category';
 import ErrorMessage from '@/app/components/ErrorMessage';
-import React from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import SelectCategory from './SelectCategory';
 import Link from 'next/link';
+import { supabase } from '@/utils/supabase';
 
 type ArticleFormProps = {
   mode: 'new' | 'edit';
@@ -16,11 +17,12 @@ type ArticleFormProps = {
   setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
   setContent: (content: string) => void;
-  thumbnailUrl: string
   setThumbnailUrl: (thumbnailUrl: string) => void
+  thumbnailImageKey: string;
   loading: boolean;
   errors: { [key: string]: string };
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
 
 const ArticleForm = ({
@@ -33,12 +35,30 @@ const ArticleForm = ({
   setSelectedCategories,
   content,
   setContent, 
-  thumbnailUrl,
   setThumbnailUrl,
+  thumbnailImageKey,
   loading,
   errors,
   handleSubmit,
+  handleImageChange,
 }: ArticleFormProps) => {
+
+  useEffect(() => {
+    if (!thumbnailImageKey) return;
+
+    const fetchImage = async () => {
+      const {
+        data: { publicUrl },
+      } = await supabase.storage
+        .from('article_thumbnail')
+        .getPublicUrl(thumbnailImageKey)
+
+      console.log(publicUrl)
+
+      setThumbnailUrl(publicUrl);
+    }
+    fetchImage();
+  }, [thumbnailImageKey])
 
   return (
     <div className='min-h-screen sm:px-4'>
@@ -67,14 +87,14 @@ const ArticleForm = ({
           </div>
 
           <div className='mb-4'>
-            <label htmlFor="thumbnailUrl">画像選択</label>
+            <label htmlFor="thumbnailImageKey">画像選択</label>
             <input 
-              type="text" 
-              name="thumbnailUrl" 
-              id="thumbnaiUrl"
-              value={thumbnailUrl}
-              className='shadow-md border rounded w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none'
-              onChange={e => setThumbnailUrl(e.target.value)}
+              type="file" 
+              // name="thumbnailImageKey" 
+              accept='image/*'
+              id="thumbnailImageKey"
+              className='shadow-md border rounded w-ful bg-white py-3 px-2 my-3 mx-2 text-gray-700 leading-tight focus:outline-none'
+              onChange={handleImageChange}
             />
             {errors.thumbnailUrl && <ErrorMessage message={errors.thumbnailUrl} />}
           </div>

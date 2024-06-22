@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export const PUT = async (
-    req: NextRequest,
+    req: Request,
     { params }: { params: { id: string } },
 ) => {
     const id = params.id;

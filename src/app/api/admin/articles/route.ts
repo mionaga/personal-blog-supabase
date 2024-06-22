@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req: Request) => {
     try {
         const articles = await prisma.article.findMany({
             include: {
@@ -36,13 +36,13 @@ export const POST = async (req: Request, contexst: any) => {
 
     try {
         const body = await req.json();
-        const { title, content, categories, thumbnailUrl } = body;
+        const { title, content, categories, thumbnailImageKey } = body;
 
         const data = await prisma.article.create({
             data: {
                 title,
                 content,
-                thumbnailUrl,
+                thumbnailImageKey,
             },
         })
 
@@ -73,7 +73,7 @@ export const POST = async (req: Request, contexst: any) => {
 }
 
 export const DELETE = async (
-    request: NextRequest,
+    request: Request,
     { params }: { params: { id: string } },
 ) => {
     const id = params.id;
