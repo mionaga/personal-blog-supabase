@@ -5,9 +5,10 @@ import { Article } from '@/types/article';
 type ArticleListProps = {
     articles: Article[];
     selectedId: number | undefined;
+    currentPage: number;
 }
 
-const ArticleList = ({ articles, selectedId }: ArticleListProps) => {
+const ArticleList = ({ articles, selectedId, currentPage}: ArticleListProps) => {
     const filteredArticles = selectedId 
       ? articles.filter(article => {
         const idList = article.articleCategories.map(element => element.categoryId);
@@ -16,7 +17,8 @@ const ArticleList = ({ articles, selectedId }: ArticleListProps) => {
       : articles;
 
   return (
-    <div>
+    <>
+      <div>
         {
           filteredArticles.length > 0 
           ? (filteredArticles.map((article) => (
@@ -24,10 +26,12 @@ const ArticleList = ({ articles, selectedId }: ArticleListProps) => {
               )
             ))
           : (
-            <p>{selectedId ? '選択されたカテゴリーの投稿記事はありません' : '記事がありません'}</p>
+            <p>{selectedId ? '選択されたカテゴリーの投稿記事はありません' : ''}</p>
           )
-      }
-    </div>
+         }
+      </div>
+    </>
+    
   )
 }
 
