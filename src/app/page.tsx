@@ -1,12 +1,12 @@
 'use client'
 
 import ArticleList from "./components/ArticleList";
+import Pagination from './components/Pagination';
 import { getArticles, getCategories } from "./getters";
 import TopAside from "./components/TopAside";
 import { useEffect, useState } from "react";
 import { Category } from "@/types/category";
 import { Article } from "@/types/article";
-import { Pagination } from "@mui/material";
 
 export default function Home() {
   const [articles, setArticles] = useState<Article[]>([])
@@ -14,6 +14,10 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState<number | undefined>()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(true)
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  }
 
   useEffect(() => {
     const fetchTopData = async () => {
@@ -41,15 +45,29 @@ export default function Home() {
     }
   }
 
+  const perPage = 5;
+  const currentArticles = articles.slice((currentPage - 1) * perPage, currentPage * perPage);
+
   return (
     <div>
       <div className="container mx-auto md:flex xl:mx-20 xl:gap-x-8 mt-3">
         <section className="w-full md:w-2/3 md:flex md:flex:col md:justify-center">
-          <ArticleList 
-            articles={articles} 
-            selectedId={selectedId}
-            currentPage={currentPage}
-          />
+        {!loading && (
+            <div className="flex flex-col items-center">
+              <ArticleList 
+                articles={currentArticles} 
+                selectedId={selectedId}
+              />
+              <div className="p-1 m-2 bg-white rounded-3xl">
+                <Pagination 
+                  currentPage={currentPage}
+                  perPage={perPage}
+                  totalItems={articles.length}
+                  handlePageChange={handlePageChange}
+                />
+              </div>
+            </div>
+          )}
         </section>
         <aside className="w-full md:w-1/3 flex flex-col items-center px-3 md:pl-6 md:mt-12 md:fixed md:top-20 md:right-6">
           <TopAside 
@@ -58,14 +76,7 @@ export default function Home() {
           />    
         </aside>
       </div>
-      {!loading && (
-        <Pagination 
-          currentPage={currentPage}
-          limit={5}
-          count={articles.length}
-          path="/"
-        />
-      )}
+     
     </div>
    
   );

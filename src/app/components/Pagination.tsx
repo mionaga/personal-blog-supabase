@@ -1,14 +1,14 @@
 import React from "react";
 
-type Props = {
+type PaginationProps = {
   currentPage: number;
-  limit: number;
-  count: number;
-  path: string;
+  perPage: number;
+  totalItems: number;
+  handlePageChange: (page: number) => void;
 };
 
-export default function Pagination({currentPage, limit, count, path}: Props) {
-  const totalPages = Math.ceil(count / limit);
+export default function Pagination({ currentPage, perPage, totalItems, handlePageChange }: PaginationProps) {
+  const totalPages = Math.ceil(totalItems / perPage);
   let startPage = Math.max(1, currentPage - 2);
   let endPage = Math.min(totalPages, currentPage + 2);
 
@@ -24,38 +24,22 @@ export default function Pagination({currentPage, limit, count, path}: Props) {
   }
 
   return (
-    <div className="">
-      <a href={`${path}?p=${currentPage - 1}`} aria-label="Previous Page">
-        <button
-          className={`${
-            currentPage === 1 || count < limit ? "cursor-not-allowed" : ""
-          }`}
-          disabled={currentPage === 1}
-        >
-          ＜         
-        </button>
-      </a>
+   <div className="flex justify-around gap-2 px-2">
+     <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+        ＜
+      </button>
       {pageNumbers.map((number) => (
-        <a key={number} href={`${path}?p=${number}`}>
-          <button
-            className={`${
-              currentPage === number ? "bg-indigo-500 text-white" : ""
-            }`}
-          >
-            {number}
-          </button>
-        </a>
-      ))}
-      <a href={`${path}?p=${currentPage + 1}`} aria-label="Next Page">
         <button
-          className={`${
-            currentPage === totalPages || count < limit ? "cursor-not-allowed" : ""
-          }`}
-          disabled={currentPage === totalPages}
+          key={number}
+          onClick={() => handlePageChange(number)}
+          className={`${currentPage === number ? "px-2 bg-indigo-500 text-white rounded-full" : ""}`}
         >
-          ＞
+          {number}
         </button>
-      </a>
-    </div>
+      ))}
+      <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+        ＞
+      </button>
+   </div>
   );
 };

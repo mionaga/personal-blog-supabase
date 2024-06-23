@@ -5,10 +5,9 @@ import { Article } from '@/types/article';
 type ArticleListProps = {
     articles: Article[];
     selectedId: number | undefined;
-    currentPage: number;
 }
 
-const ArticleList = ({ articles, selectedId, currentPage}: ArticleListProps) => {
+const ArticleList = ({ articles, selectedId }: ArticleListProps) => {
     const filteredArticles = selectedId 
       ? articles.filter(article => {
         const idList = article.articleCategories.map(element => element.categoryId);
