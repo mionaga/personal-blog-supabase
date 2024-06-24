@@ -1,11 +1,4 @@
-import { useSupabaseSessions } from "./_hooks/useSupabaseHooks";
-
 const API_URL = 'http://localhost:3000/api'
-
-const fetchToken = () => {
-  const { token } = useSupabaseSessions();
-  return token;
-};
 
 export const getArticles = async () => {
     const res = await fetch(API_URL + '/articles');

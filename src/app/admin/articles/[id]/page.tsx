@@ -7,6 +7,9 @@ import { notFound, useParams, useRouter } from 'next/navigation'
 import ArticleForm from '../components/ArticleForm';
 import { articleValidate } from '../components/PostingValidate';
 import { Category } from '@/types/category';
+import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
+import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '@/utils/supabase';
 
 
 const EditArticle = () => {
@@ -16,27 +19,65 @@ const EditArticle = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<{id:number, name:string}[]>([]);
   const [content, setContent] = useState<string>('');
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
+  const [preThumbnailUrl, setPreThumbnailUrl] = useState<string>('');
+  const [thumbnailImageKey, setThumbnailImageKey] = useState('')
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { token } = useSupabaseSessions();
  
   useEffect(() => {
-    const fetchArticle = async () => {
+      const fetchArticle = async () => {
       const article = await getAdminArticle(id);
       if (!article) {
         notFound();
         return
       }
-
       setTitle(article.title);
       setContent(article.content);
-
+      setThumbnailImageKey(article.thumbnailImageKey)
       const categories = article.articleCategories.map((ac:any) => ac.category);
       setSelectedCategories(categories);
-     
+
+      const { data } = supabase
+        .storage
+        .from('article_thumbnail')
+        .getPublicUrl(article.thumbnailImageKey);
+      if (data) {
+        setPreThumbnailUrl(data.publicUrl);
+      }
     }
     fetchArticle();
   }, [id])
+
+  const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    let filePath = thumbnailImageKey;
+
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const filePath = `private/${uuidv4()}`;
+
+      const { data, error } = await supabase.storage
+      .from('article_thumbnail')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (error) {
+      throw error;
+      return;
+    }
+    setThumbnailImageKey(data.path);
+
+    // const { data: publicUrlData } = supabase
+    //     .storage
+    //     .from('article_thumbnail')
+    //     .getPublicUrl(data.path);
+    //   if (publicUrlData) {
+    //     setPreThumbnailUrl(publicUrlData.publicUrl);
+    //   }
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,22 +96,19 @@ const EditArticle = () => {
       title,
       content,
       categories: selectedCategories.map(cat => cat.id),
-      thumbnailUrl
+      thumbnailImageKey
     };
-
-    console.log(articleData);
 
      try {
       const res = await fetch(`/api/admin/articles/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify(articleData)
       });
 
-      console.log(res);
-  
       setLoading(false);
       router.push(`/articles/${id}`);
       router.refresh();
@@ -92,10 +130,12 @@ const EditArticle = () => {
         setSelectedCategories={setSelectedCategories}
         content={content}
         setContent={setContent}
-        thumbnailUrl={thumbnailUrl}
-        setThumbnailUrl={setThumbnailUrl}
+        thumbnailUrl={preThumbnailUrl}
+        setThumbnailUrl={setPreThumbnailUrl}
+        thumbnailImageKey={thumbnailImageKey}
         loading={loading}
         errors={errors}
+        handleImageChange={handleImageChange}
         handleSubmit={handleSubmit}
       />
       <div className='flex justify-end mx-8'>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import { useRouteGuard } from '../_hooks/useSupabaseHooks';
+import { useRouteGuard } from '../../utils/_hooks/useSupabaseHooks';
 
 const AdminLayout = ({
   children,

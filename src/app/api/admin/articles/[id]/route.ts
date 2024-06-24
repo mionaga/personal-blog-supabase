@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase";
 import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server";
 
@@ -7,7 +8,11 @@ export const GET = async (
     req: Request,
     { params }: { params: { id: string} },
 ) => {
-    const id = params.id
+    const id = params.id;
+    // const token = req.headers.get('Authorization') ?? ''
+    // const { error } = await supabase.auth.getUser(token);
+    // if (error)
+    //     return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
         const article = await prisma.article.findUnique({
@@ -41,6 +46,11 @@ export const PUT = async (
     req: Request,
     { params }: { params: { id: string } }, 
 ) => {
+    const token = req.headers.get('Authorization') ?? ''
+    const { error } = await supabase.auth.getUser(token);
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 });
+
     const id = params.id;
     const { title, content, categories, thumbnailImageKey } = await req.json()
 
