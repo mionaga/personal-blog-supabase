@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import HeaderDrawer from './components/HeaderDrawer';
 import { usePathname } from 'next/navigation';
-import { useSupabaseSessions } from './_hooks/useSupabaseHooks';
+import { useSupabaseSessions } from '../utils/_hooks/useSupabaseHooks';
 import { supabase } from '@/utils/supabase';
 
 

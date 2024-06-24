@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -31,8 +32,11 @@ export const GET = async (req: Request) => {
 }
 
 
-export const POST = async (req: Request, contexst: any) => {
-   
+export const POST = async (req: Request) => {
+   const token = req.headers.get('Authorization') ?? ''
+   const { error } = await supabase.auth.getUser(token);
+   if (error) 
+    return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
         const body = await req.json();

@@ -42,7 +42,7 @@ export default async function ArticleDetail({
 
 
   return (
-    <div className='flex flex-row p-6'>
+    <div className='flex flex-row sm:p-6'>
       <div className="md:basis-1/6"></div>
       <div className="md:basis-4/6 mt-10 p-5 md:p-10 bg-gray-300 rounded">
         {article.thumbnailImageKey && (

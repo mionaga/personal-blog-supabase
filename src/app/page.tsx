@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchTopData = async () => {
+      setLoading(true);
       try {
         const [articleData, categoryData] = await Promise.all([
           getArticles(),
@@ -58,7 +59,7 @@ export default function Home() {
                 articles={currentArticles} 
                 selectedId={selectedId}
               />
-              <div className="p-1 m-2 bg-white rounded-3xl">
+              <div className="p-1 mt-2 sm:mb-8 bg-slate-200 rounded-3xl">
                 <Pagination 
                   currentPage={currentPage}
                   perPage={perPage}

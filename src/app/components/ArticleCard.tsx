@@ -17,7 +17,7 @@ const ArticleCard = ({ article }:ArticleCardProps) => {
             alt='Article Image'
             width={600}
             height={300}
-            className='bg-slate-50 p-2 hover:opacity-75'
+            className='image-auto bg-slate-50 p-2 hover:opacity-75'
         />
         )}
             <div className='p-6 bg-white'>

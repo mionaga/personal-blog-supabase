@@ -17,7 +17,8 @@ type ArticleFormProps = {
   setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
   setContent: (content: string) => void;
-  setThumbnailUrl: (thumbnailUrl: string) => void
+  thumbnailUrl: string;
+  setThumbnailUrl: (thumbnailUrl: string) => void;
   thumbnailImageKey: string;
   loading: boolean;
   errors: { [key: string]: string };
@@ -35,6 +36,7 @@ const ArticleForm = ({
   setSelectedCategories,
   content,
   setContent, 
+  thumbnailUrl,
   setThumbnailUrl,
   thumbnailImageKey,
   loading,
@@ -52,8 +54,6 @@ const ArticleForm = ({
       } = await supabase.storage
         .from('article_thumbnail')
         .getPublicUrl(thumbnailImageKey)
-
-      console.log(publicUrl)
 
       setThumbnailUrl(publicUrl);
     }
@@ -90,12 +90,18 @@ const ArticleForm = ({
             <label htmlFor="thumbnailImageKey">画像選択</label>
             <input 
               type="file" 
-              // name="thumbnailImageKey" 
               accept='image/*'
               id="thumbnailImageKey"
               className='shadow-md border rounded w-ful bg-white py-3 px-2 my-3 mx-2 text-gray-700 leading-tight focus:outline-none'
               onChange={handleImageChange}
             />
+            {
+              mode === 'edit' 
+              ? <div className='my-4'>
+                  <img src={thumbnailImageKey} alt="Preview" className='max-w-25 h-auto' />
+                </div>
+              : ''
+            }
             {errors.thumbnailUrl && <ErrorMessage message={errors.thumbnailUrl} />}
           </div>
 

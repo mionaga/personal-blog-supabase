@@ -2,12 +2,16 @@
 
 import { supabase } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+// import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+// import type { Database } from "../../../src/lib/db/database.types";
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
+    // const supabase = createClientComponentClient<Database>();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -43,7 +47,7 @@ const Login = () => {
                         placeholder='name@company.com'
                         required
                         onChange={(e) => setEmail(e.target.value)}
-                        vallue={email}      
+                        value={email}      
                     />
                 </div>
                 <div>
@@ -58,7 +62,7 @@ const Login = () => {
                         placeholder='•••••••••'
                         required
                         onChange={(e) => setPassword(e.target.value)}
-                        vallue={password}      
+                        value={password}      
                     />
                 </div>
                 
