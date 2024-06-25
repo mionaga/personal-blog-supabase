@@ -107,9 +107,10 @@ const EditArticle = () => {
         },
         body: JSON.stringify(articleData)
       });
-
+      const updatedArticle = await res.json();
       setLoading(false);
-      router.push(`/articles/${id}`);
+      await router.push(`/articles/${id}?updated=true`);
+    
       router.refresh();
      } catch (error) {
       console.error('Error updating article:', error);

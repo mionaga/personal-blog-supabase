@@ -22,11 +22,13 @@ const SelectCategory = ({
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [filterInput, setFilterInput] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
       const fetchCategories = async () => {
         const categories = await getCategories();
         setCategories(categories);
+        setLoading(false);
       };
       fetchCategories();
     }, []);

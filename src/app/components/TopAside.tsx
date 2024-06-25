@@ -1,14 +1,13 @@
 import React from 'react'
-import { getCategories } from '../getters'
 import { Category } from '@/types/category';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type TopAsideProps = {
     categories: Category[];
-    handleClick: (id: number) => void;
 }
 
-const TopAside = ({ categories, handleClick }: TopAsideProps) => {
+const TopAside = ({ categories }: TopAsideProps) => {
 
   return (
     <>
@@ -41,14 +40,17 @@ const TopAside = ({ categories, handleClick }: TopAsideProps) => {
             <h3 className="font-bold text-gray-900 text-lg mb-2">Category</h3>
             <ul className="text-gray-600 mt-2">
             {categories.map(category => (
-                <li 
-                    key={category.id}
-                    className='px-2 pb-2 cursor-pointer text-blue-700 font-bold'
-                    onClick={() => handleClick(category.id)} 
-                     >
-                    {category.name}
-                </li>
+                <Link href={`?category=${category.id}`} key={category.id}>
+                    <li className='px-2 pb-2 cursor-pointer text-blue-700 font-bold'>
+                        {category.name}
+                    </li>
+                </Link>
             ))}
+            <Link href={'/'}>
+                <li className='px-2 pb-2 cursor-pointer text-blue-700 font-bold'>
+                    All blogs
+                </li>
+            </Link>
             </ul>
         </div>
     </>

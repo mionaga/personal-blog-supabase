@@ -4,28 +4,20 @@ import { Article } from '@/types/article';
 
 type ArticleListProps = {
     articles: Article[];
-    selectedId: number | undefined;
 }
 
-const ArticleList = ({ articles, selectedId }: ArticleListProps) => {
-    const filteredArticles = selectedId 
-      ? articles.filter(article => {
-        const idList = article.articleCategories.map(element => element.categoryId);
-        return idList.includes(selectedId);
-        })
-      : articles;
-
+const ArticleList = ({ articles }: ArticleListProps) => {
   return (
     <>
       <div>
         {
-          filteredArticles.length > 0 
-          ? (filteredArticles.map((article) => (
+          articles.length > 0 
+          ? (articles.map((article) => (
               <ArticleCard article={article} key={article.id} />
               )
             ))
           : (
-            <p>{selectedId ? '選択されたカテゴリーの投稿記事はありません' : ''}</p>
+            <p>投稿された記事はまだありません</p>
           )
          }
       </div>

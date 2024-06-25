@@ -1,6 +1,7 @@
 import ImageFetcher from '@/app/components/ImageFetcher';
 import { getArticle, getCategories } from '@/app/getters';
 import { Article } from '@/types/article';
+import { ArticleCategory } from '@/types/articleCategory';
 import { Category } from '@/types/category';
 import { ConstructionOutlined } from '@mui/icons-material';
 import { Metadata, ResolvingMetadata } from 'next';
@@ -11,10 +12,9 @@ import React from 'react'
 export async function generateMetadata ({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
   parent?: ResolvingMetadata;
 }): Promise<Metadata> {
-
   const article = await getArticle(params.id);
 
   return {
@@ -27,24 +27,22 @@ export async function generateMetadata ({
 export default async function ArticleDetail({ 
   params
  }: {
-  params: { id: number };
+  params: { id: string };
  }) {
-
-  const article:Article = await getArticle(params.id);
-  const categories:Category[] = await getCategories();
-  console.log(article)
+  const [article, categories] = await Promise.all([
+    getArticle(params.id),
+    getCategories(),
+  ]);
 
   if (!article) {
     notFound();
   }
 
-//   const categoryIds:number[] = article.articleCategories.map(ac => ac.categoryId);
-//   const categoryNames = categories
-//     .filter(c => categoryIds.includes(c.id))
-//     .map(c => c.name);
+  const categoryIds:number[] = article.articleCategories.map((ac:ArticleCategory) => ac.categoryId);
+  const categoryNames = await categories
+    .filter((c: Category) => categoryIds.includes(c.id))
+    .map((c: Category) => c.name);
 
-// console.log(categoryNames);
- 
   return (
     <div className='flex flex-row sm:p-6'>
       <div className="md:basis-1/6"></div>
@@ -58,12 +56,12 @@ export default async function ArticleDetail({
             className='rounded'
           />
         )}
-        {/* <div className='flex justify-start my-10 gap-5'>
+        <div className='flex justify-start my-10 gap-5'>
           <h2 className='text-4xl italic px-4'>{article.title}</h2>
-          {categoryNames.map((name, index) => (
+          {categoryNames.map((name:string, index:number) => (
             <p key={index} className='text-blue-700 text-xl font-bold pt-3'>{name}</p>
           ))}
-        </div> */}
+        </div>
         
         <div className="text-lg align-middle whitespace-break-spaces leading-relaxed text-justify px-4 mb-3">{article.content}</div>
         <div className='p-2 flex justify-end mt-6'>

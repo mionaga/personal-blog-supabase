@@ -111,8 +111,6 @@ const ArticleForm = ({
 
           <div className='mb-4'>
            <SelectCategory
-              categories={categories} 
-              // setCategories={setCategories}
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
               errors={errors}
