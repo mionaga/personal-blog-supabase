@@ -1,9 +1,10 @@
+import { supabase } from "@/utils/supabase";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req: Request) => {
     try {
         const articles = await prisma.article.findMany({
             include: {
@@ -31,18 +32,21 @@ export const GET = async (req: NextRequest) => {
 }
 
 
-export const POST = async (req: Request, contexst: any) => {
-   
+export const POST = async (req: Request) => {
+   const token = req.headers.get('Authorization') ?? ''
+   const { error } = await supabase.auth.getUser(token);
+   if (error) 
+    return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
         const body = await req.json();
-        const { title, content, categories, thumbnailUrl } = body;
+        const { title, content, categories, thumbnailImageKey } = body;
 
         const data = await prisma.article.create({
             data: {
                 title,
                 content,
-                thumbnailUrl,
+                thumbnailImageKey,
             },
         })
 
@@ -69,5 +73,24 @@ export const POST = async (req: Request, contexst: any) => {
             return NextResponse.json({ status: error.message }, { status: 500 });
         }
         return NextResponse.json({ status: 'Unknown error' }, { status: 500 });
+    }
+}
+
+export const DELETE = async (
+    request: Request,
+    { params }: { params: { id: string } },
+) => {
+    const id = params.id;
+
+    try {
+        await prisma.article.delete({
+            where: {
+                id: parseInt(id),
+            },
+        })
+        return NextResponse.json({ status: 'ok' }, { status: 200 })
+    } catch (error) {
+        if (error instanceof Error)
+            return NextResponse.json({ status: error.message }, { status: 400 })
     }
 }

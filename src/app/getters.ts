@@ -1,42 +1,46 @@
+const API_URL = 'http://localhost:3000/api'
+
 export const getArticles = async () => {
-    const res = await fetch('http://localhost:3000/api/articles',
-         { cache: 'no-store' }
-        );
-    
-        if (!res.ok) {
-            throw new Error("Failed to fetch article");
-          }
-  
+    const res = await fetch(API_URL + '/articles');
+   
           const articles = await res.json();
           return articles.articles;
 }
 
-export const getArticle = async (id: number) => {
-    const res = await fetch(`http://localhost:3000/api/articles/${id}`, {
+export const getArticle = async (id: string) => {
+    const res = await fetch(`${API_URL}/articles/${id}`, {
       next: { revalidate: 60 },
     });
   
-    if (res.status === 404) {
-      notFound();
-    }
-  
-    if (!res.ok) {
-      throw new Error("Failed to fetch article");
-    }
-  
     const article = await res.json();
     return article.article;
-  };
+}
 
-  export const getCategories = async () => {
-    const res = await fetch('http://localhost:3000/api/admin/categories',
-         { cache: 'no-store' }
-        );
-    
-        if (!res.ok) {
-            throw new Error("Failed to fetch categories");
-          }
-  
-          const categories = await res.json();
-          return categories.categories;
+export const getAdminArticles = async () => {
+  const res = await fetch(`${API_URL}/admin/articles`, { cache: 'no-store' });
+ 
+    const articles = await res.json();
+    return articles.articles;
+}
+
+export const getAdminArticle = async (id: string) => {
+  const res = await fetch(`${API_URL}/admin/articles/${id}`);
+
+  const article = await res.json();
+  return article.article;
+}
+
+export const getCategories = async () => {
+  const res = await fetch(`${API_URL}/admin/categories`, { cache: 'no-store' });
+    const categories = await res.json();
+    return categories.categories;
+}
+
+export const getCategory = async (id: string) => {
+  const res = await fetch(`${API_URL}/admin/categories/${id}`, {
+   next: { revalidate: 60 },
+  });
+
+  const category = await res.json();
+  return category.categories;
 }

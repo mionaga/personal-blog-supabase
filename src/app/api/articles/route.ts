@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req: Request) => {
     try {
         const articles = await prisma.article.findMany({
             include: {
@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ status: 'OK', articles: articles }, { status: 200 }) 
     } catch (error) {
         if (error instanceof Error)
-            return NextRequest.json({ status: error.message }, {status: 500})
+            return Request.json({ status: error.message }, {status: 500})
     }
 }
 
