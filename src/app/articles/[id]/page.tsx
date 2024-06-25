@@ -1,7 +1,9 @@
 import ImageFetcher from '@/app/components/ImageFetcher';
 import { getArticle, getCategories } from '@/app/getters';
+import { Article } from '@/types/article';
+import { Category } from '@/types/category';
+import { ConstructionOutlined } from '@mui/icons-material';
 import { Metadata, ResolvingMetadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
@@ -28,19 +30,21 @@ export default async function ArticleDetail({
   params: { id: number };
  }) {
 
-  const article = await getArticle(params.id);
-  const categories = await getCategories();
+  const article:Article = await getArticle(params.id);
+  const categories:Category[] = await getCategories();
+  console.log(article)
 
   if (!article) {
     notFound();
   }
 
-  const categoryIds = article.articleCategories.map(e => e.categoryId);
-  const categoryNames = categories
-    .filter(category => categoryIds.includes(category.id))
-    .map(category => category.name);
+//   const categoryIds:number[] = article.articleCategories.map(ac => ac.categoryId);
+//   const categoryNames = categories
+//     .filter(c => categoryIds.includes(c.id))
+//     .map(c => c.name);
 
-
+// console.log(categoryNames);
+ 
   return (
     <div className='flex flex-row sm:p-6'>
       <div className="md:basis-1/6"></div>
@@ -54,12 +58,12 @@ export default async function ArticleDetail({
             className='rounded'
           />
         )}
-        <div className='flex justify-start my-10 gap-5'>
+        {/* <div className='flex justify-start my-10 gap-5'>
           <h2 className='text-4xl italic px-4'>{article.title}</h2>
           {categoryNames.map((name, index) => (
             <p key={index} className='text-blue-700 text-xl font-bold pt-3'>{name}</p>
           ))}
-        </div>
+        </div> */}
         
         <div className="text-lg align-middle whitespace-break-spaces leading-relaxed text-justify px-4 mb-3">{article.content}</div>
         <div className='p-2 flex justify-end mt-6'>

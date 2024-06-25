@@ -2,7 +2,7 @@
 
 import { Category } from '@/types/category';
 import ErrorMessage from '@/app/components/ErrorMessage';
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import SelectCategory from './SelectCategory';
 import Link from 'next/link';
 import { supabase } from '@/utils/supabase';
@@ -13,7 +13,6 @@ type ArticleFormProps = {
   title: string;
   setTitle: (title: string) => void;
   categories: Category[];
-  setCategories: ( categories: Category[] ) => void;
   selectedCategories: { id: number, name: string }[];
   setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
@@ -31,8 +30,6 @@ const ArticleForm = ({
   mode,
   title,
   setTitle,
-  categories,
-  setCategories,
   selectedCategories,
   setSelectedCategories,
   content,
@@ -115,7 +112,7 @@ const ArticleForm = ({
           <div className='mb-4'>
            <SelectCategory
               categories={categories} 
-              setCategories={setCategories}
+              // setCategories={setCategories}
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
               errors={errors}

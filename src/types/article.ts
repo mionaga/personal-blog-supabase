@@ -5,6 +5,6 @@ export interface Article {
     title: string
     content: string
     createdAt: string
-    postCategories: { category: Category }[]
+    articleCategories: { category: Category }[]
     thumbnailImageKey: string
   }

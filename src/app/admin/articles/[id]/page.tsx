@@ -16,7 +16,6 @@ const EditArticle = () => {
   const { id } = useParams();
   const router = useRouter();
   const [title, setTitle] = useState<string>('');
-  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<{id:number, name:string}[]>([]);
   const [content, setContent] = useState<string>('');
   const [preThumbnailUrl, setPreThumbnailUrl] = useState<string>('');
@@ -124,8 +123,8 @@ const EditArticle = () => {
         mode='edit'
         title={title}
         setTitle={setTitle}
-        categories={categories}
-        setCategories={setCategories}
+        // categories={categories}
+        // setCategories={setCategories}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
         content={content}

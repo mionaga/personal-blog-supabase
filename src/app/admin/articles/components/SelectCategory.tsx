@@ -8,8 +8,6 @@ import Select, { InputActionMeta, MultiValue } from 'react-select';
 import { Category } from '@/types/category';
 
 type SelectCategoryProps = {
-    categories: Category[];
-    setCategories: ( categories: Category[] ) => void;
     selectedCategories: { id: number, name: string }[];
     setSelectedCategories: (categories: { id:number, name: string }[]) => void;
     errors: { [key: string]: string };
@@ -17,13 +15,12 @@ type SelectCategoryProps = {
   
 
 const SelectCategory = ({
-    categories, 
-    setCategories,
     selectedCategories,
     setSelectedCategories,
     errors,
  }: SelectCategoryProps) => {
 
+  const [categories, setCategories] = useState<Category[]>([]);
   const [filterInput, setFilterInput] = useState("");
 
   useEffect(() => {
