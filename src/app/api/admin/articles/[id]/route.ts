@@ -9,11 +9,6 @@ export const GET = async (
     { params }: { params: { id: string} },
 ) => {
     const id = params.id;
-    // const token = req.headers.get('Authorization') ?? ''
-    // const { error } = await supabase.auth.getUser(token);
-    // if (error)
-    //     return NextResponse.json({ status: error.message }, { status: 400 })
-
     try {
         const article = await prisma.article.findUnique({
             where: {
@@ -100,6 +95,11 @@ export const DELETE = async (
     { params }: { params: { id: string } }, 
 ) => {
     const id = params.id;
+    const token = req.headers.get('Authorization') ?? ''
+
+    const { error } = await supabase.auth.getUser(token);
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
         await prisma.article.delete({

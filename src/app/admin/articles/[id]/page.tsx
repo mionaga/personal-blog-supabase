@@ -69,13 +69,13 @@ const EditArticle = () => {
     }
     setThumbnailImageKey(data.path);
 
-    // const { data: publicUrlData } = supabase
-    //     .storage
-    //     .from('article_thumbnail')
-    //     .getPublicUrl(data.path);
-    //   if (publicUrlData) {
-    //     setPreThumbnailUrl(publicUrlData.publicUrl);
-    //   }
+    const { data: publicUrlData } = supabase
+        .storage
+        .from('article_thumbnail')
+        .getPublicUrl(data.path);
+      if (publicUrlData) {
+        setPreThumbnailUrl(publicUrlData.publicUrl);
+      }
     }
   }
 
@@ -138,7 +138,7 @@ const EditArticle = () => {
         handleImageChange={handleImageChange}
         handleSubmit={handleSubmit}
       />
-      <div className='flex justify-end mx-8'>
+      <div className='sm:flex justify-end mx-8'>
         <p className='text-xl text-slate-500'>この記事を削除しますか？▶️</p>
         <DeleteArticleButton id={id} />
       </div>

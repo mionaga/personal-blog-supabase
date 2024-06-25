@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import CategoryForm from '../components/CategoryForm';
 import { categoryValidate } from '../../articles/components/PostingValidate';
+import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
 
 const NewCategory = () => {
   const router = useRouter();
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { token } = useSupabaseSessions();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const NewCategory = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify({name})
     })

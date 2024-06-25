@@ -6,6 +6,7 @@ import React, { ChangeEvent, useEffect } from 'react'
 import SelectCategory from './SelectCategory';
 import Link from 'next/link';
 import { supabase } from '@/utils/supabase';
+import ImageFetcher from '@/app/components/ImageFetcher';
 
 type ArticleFormProps = {
   mode: 'new' | 'edit';
@@ -63,7 +64,7 @@ const ArticleForm = ({
   return (
     <div className='min-h-screen sm:px-4'>
       <div className='p-6 text-slate-700'>
-        <div className="flex justify-between items-center mb-8">
+        <div className="sm:flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold mb-4">
             {mode === 'new' ? 'ブログ新規作成' : 'ブログ編集'}
           </h2>
@@ -86,19 +87,25 @@ const ArticleForm = ({
             {errors.title && <ErrorMessage message={errors.title} />}
           </div>
 
-          <div className='mb-4'>
-            <label htmlFor="thumbnailImageKey">画像選択</label>
+          <div className='mb-6'>
+            <label htmlFor="thumbnailImageKey" className='flex'>画像選択</label>
             <input 
               type="file" 
               accept='image/*'
               id="thumbnailImageKey"
-              className='shadow-md border rounded w-ful bg-white py-3 px-2 my-3 mx-2 text-gray-700 leading-tight focus:outline-none'
+              className='shadow-md border rounded w-full bg-white py-3 px-1 my-3 mx-2 text-gray-700 leading-tight focus:outline-none'
               onChange={handleImageChange}
             />
             {
               mode === 'edit' 
-              ? <div className='my-4'>
-                  <img src={thumbnailImageKey} alt="Preview" className='max-w-25 h-auto' />
+              ? <div className='my-4 ml-4 sm:flex gap-5'>
+                <span>選択中画像</span>
+                  <ImageFetcher 
+                    thumbnailImageKey={thumbnailImageKey} 
+                    alt="Preview"
+                    width={80}
+                    height={80} 
+                    className='max-w-25 h-auto' />
                 </div>
               : ''
             }

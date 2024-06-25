@@ -1,5 +1,6 @@
 'use client'
 
+import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
@@ -9,9 +10,16 @@ type DeleteButtonProps = {
 
 const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
     const router = useRouter();
+    const { token } = useSupabaseSessions();
 
     const handleRemove = async () => {
-        await fetch(`http://localhost:3000//api/admin/articles/${id}`, { method: 'DELETE' });
+        if (!token) return;
+        await fetch(`http://localhost:3000//api/admin/articles/${id}`, { 
+          method: 'DELETE',
+          headers: {
+            'Authorization': token,
+          }
+        });
 
         router.push('/admin/articles');
         router.refresh();
