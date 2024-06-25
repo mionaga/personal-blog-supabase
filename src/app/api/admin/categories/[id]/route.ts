@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +9,13 @@ export const PUT = async (
     { params }: { params: { id: string } },
 ) => {
     const id = params.id;
+    const token = req.headers.get('Authorization') ?? '';
+    const { error } = await supabase.auth.getUser(token);
     const { name } = await req.json();
+
+    if(error) {
+        return NextResponse.json({ status: error.message }, { status: 400 })
+    }
 
     if (!name) {
         return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });
@@ -35,7 +42,12 @@ export const DELETE = async (
     req: NextResponse,
     { params }: { params: { id: string } },
 ) => {
+    const token = req.headers.get('Authorization') ?? '';
+    const { error } = await supabase.auth.getUser(token); 
     const id = params.id;
+
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
         await prisma.category.delete({

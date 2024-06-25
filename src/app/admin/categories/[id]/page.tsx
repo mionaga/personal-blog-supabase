@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import CategoryForm from '../components/CategoryForm';
 import { categoryValidate } from '../../articles/components/PostingValidate';
+import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
 
 const EditCategory = ({params}: {params: { id: string }}) => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const id = params.id;
+  const { token } = useSupabaseSessions();
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -39,6 +41,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify({ name }),
     });

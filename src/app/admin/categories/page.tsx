@@ -6,7 +6,6 @@ import React from 'react'
 
 const CategoriesIndex = async () => {
     const categories: Category[] = await getCategories();
-    console.log(categories);
 
   return (
     <>
