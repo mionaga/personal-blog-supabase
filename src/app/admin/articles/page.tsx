@@ -12,7 +12,6 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
   const perPage = 10;
 
   const articlesData = await getAdminArticles();
-  console.log(articlesData)
   const totalArticles = await articlesData.length;
   const totalPages = Math.ceil(totalArticles / perPage);
   const articles = articlesData.slice((currentPage - 1) * perPage, currentPage * perPage);
@@ -55,7 +54,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
                 <Link href={`/admin/articles/${article.id}`}>編集</Link>
               </button>
               <div className='mt-3'>
-                <DeleteArticleButton id={article.id} />
+                <DeleteArticleButton id={article.id.toString()} />
               </div>
             </div>
           </div>
