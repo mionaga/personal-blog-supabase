@@ -12,7 +12,6 @@ type ArticleFormProps = {
   mode: 'new' | 'edit';
   title: string;
   setTitle: (title: string) => void;
-  categories: Category[];
   selectedCategories: { id: number, name: string }[];
   setSelectedCategories: (categories: { id: number, name: string }[]) => void;
   content: string
@@ -34,7 +33,6 @@ const ArticleForm = ({
   setSelectedCategories,
   content,
   setContent, 
-  thumbnailUrl,
   setThumbnailUrl,
   thumbnailImageKey,
   loading,
