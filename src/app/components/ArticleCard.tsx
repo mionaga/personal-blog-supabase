@@ -1,13 +1,16 @@
 import { Article } from '@/types/article'
-import SelectedCategoy from './SelectedCategoy';
+import SelectedCategory from './SelectedCategory';
 import Link from 'next/link';
 import ImageFetcher from './ImageFetcher';
+import { ArticleCategory } from '@/types/articleCategory';
 
 type ArticleCardProps = {
     article: Article;
 }
 
 const ArticleCard = ({ article }:ArticleCardProps) => {
+    console.log('article :', article.articleCategories);
+
   return (
     <article key={article.id} className='my-6 w-full max-w-xl shadow-sm hover:opacity-75 hover:shadow-none md:m-5'>
         <Link href={`articles/${article.id}`}>
@@ -22,8 +25,10 @@ const ArticleCard = ({ article }:ArticleCardProps) => {
         )}
             <div className='p-6 bg-white'>
             <span className='text-blue-700 pb-4 font-bold'>
-                {article.articleCategories.map(category => (
-                    <SelectedCategoy key={category.categoryId} category={category.category} />
+                {article.articleCategories.map((ac: ArticleCategory) => (
+                    <div key={ac.categoryId}>
+                        <SelectedCategory articleCategory={ac} />
+                    </div>
                 ))}
             </span>
             <h2 className='text-slate-900 text-3xl pb-4 font-bold hover:text-gray-700'>{article.title}</h2>
@@ -38,4 +43,4 @@ const ArticleCard = ({ article }:ArticleCardProps) => {
   )
 }
 
-export default ArticleCard
+export default ArticleCard;

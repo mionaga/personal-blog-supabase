@@ -1,7 +1,7 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 export const getArticles = async () => {
-    const res = await fetch(API_URL + '/articles');
+    const res = await fetch(API_URL + '/articles', { cache: 'no-store' });
    
           const articles = await res.json();
           return articles.articles;

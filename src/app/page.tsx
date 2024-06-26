@@ -25,7 +25,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
     getCategories()
   ]);
 
-  let filteredArticles = articleData;
+  let filteredArticles = await articleData;
 
   if (categoryId) {
     filteredArticles = await articleData.filter((article: Article) => 
@@ -33,7 +33,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
     );
   }
 
-  const totalArticles = filteredArticles.length;
+  const totalArticles = await filteredArticles.length;
   const currentArticles = filteredArticles.slice((currentPage - 1) * perPage, currentPage * perPage);
 
   return (
