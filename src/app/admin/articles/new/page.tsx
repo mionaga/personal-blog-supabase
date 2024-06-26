@@ -98,8 +98,6 @@ const CreateArticles = () => {
       mode='new' 
       title={title}
       setTitle={setTitle}
-      categories={categories}
-      setCategories={setCategories}
       selectedCategories={selectedCategories}
       setSelectedCategories={setSelectedCategories}
       content={content}
