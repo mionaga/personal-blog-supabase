@@ -26,7 +26,7 @@ export const GET = async (req: Request) => {
         return NextResponse.json({ status: 'OK', articles: articles }, { status: 200 }) 
     } catch (error) {
         if (error instanceof Error)
-            return Request.json({ status: error.message }, {status: 500})
+            return NextResponse.json({ status: error.message }, {status: 500})
     }
 }
 
