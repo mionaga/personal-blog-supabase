@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import CategoryForm from '../components/CategoryForm';
 import { categoryValidate } from '../../articles/components/PostingValidate';
 import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
+import { Category } from '@/types/category';
 
 const EditCategory = ({params}: {params: { id: string }}) => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
   useEffect(() => {
     const fetchCategory = async () => {
       const categories = await getCategories();
-      const editCategory = categories.filter(e => (id == e.id))
+      const editCategory = categories.filter((e: Category) => (id == e.id))
       setName(editCategory[0].name);
     }
     fetchCategory();
