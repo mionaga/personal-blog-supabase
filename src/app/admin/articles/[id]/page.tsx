@@ -133,7 +133,6 @@ const EditArticle = () => {
         setSelectedCategories={setSelectedCategories}
         content={content}
         setContent={setContent}
-        thumbnailUrl={preThumbnailUrl}
         setThumbnailUrl={setPreThumbnailUrl}
         thumbnailImageKey={thumbnailImageKey}
         loading={loading}
