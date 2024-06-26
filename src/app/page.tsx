@@ -4,8 +4,6 @@ import Pagination from './components/Pagination';
 import { getArticles, getCategories } from "./getters";
 import { Category } from "@/types/category";
 import { Article } from "@/types/article";
-import { useRouter } from "next/router";
-import { ArticleCategory } from "@/types/articleCategory";
 
 type HomeProps = {
   articles: Article[];
@@ -29,7 +27,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
 
   if (categoryId) {
     filteredArticles = await articleData.filter((article: Article) => 
-      article.articleCategories.some(ac => ac.categoryId === categoryId)
+      article.articleCategories.some(ac => ac.category.id === categoryId)
     );
   }
 

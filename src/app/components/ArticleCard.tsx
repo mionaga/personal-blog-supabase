@@ -2,7 +2,7 @@ import { Article } from '@/types/article'
 import SelectedCategory from './SelectedCategory';
 import Link from 'next/link';
 import ImageFetcher from './ImageFetcher';
-import { ArticleCategory } from '@/types/articleCategory';
+import { Category } from '@/types/category';
 
 type ArticleCardProps = {
     article: Article;
@@ -25,9 +25,9 @@ const ArticleCard = ({ article }:ArticleCardProps) => {
         )}
             <div className='p-6 bg-white'>
             <span className='text-blue-700 pb-4 font-bold'>
-                {article.articleCategories.map((ac: ArticleCategory) => (
-                    <div key={ac.categoryId}>
-                        <SelectedCategory articleCategory={ac} />
+                {article.articleCategories.map((ac) => (
+                    <div key={ac.category.id}>
+                        <SelectedCategory category={ac} />
                     </div>
                 ))}
             </span>

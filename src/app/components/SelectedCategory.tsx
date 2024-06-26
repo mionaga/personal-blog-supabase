@@ -1,12 +1,12 @@
-import { ArticleCategory } from '@/types/articleCategory';
+import { Category } from '@/types/category';
 
 type SelectedCategoryProps = {
-    articleCategory: ArticleCategory;
+    category: Category;
 };
 
-const SelectedCategory = ({ articleCategory }: SelectedCategoryProps) => {
+const SelectedCategory = ({ category }: SelectedCategoryProps) => {
     return (
-        <div>{articleCategory.category.name}</div>
+        <div>{category.name}</div>
     );
 };
 
