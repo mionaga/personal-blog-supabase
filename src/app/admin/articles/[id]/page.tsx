@@ -2,18 +2,17 @@
 
 import React, { useEffect, useState } from 'react'
 import DeleteArticleButton from '../components/DeleteArticleButton';
-import { getAdminArticle, getCategories } from '@/app/getters';
+import { getAdminArticle } from '@/app/getters';
 import { notFound, useParams, useRouter } from 'next/navigation'
 import ArticleForm from '../components/ArticleForm';
 import { articleValidate } from '../components/PostingValidate';
-import { Category } from '@/types/category';
 import { useSupabaseSessions } from '@/utils/_hooks/useSupabaseHooks';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/utils/supabase';
 
 
 const EditArticle = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [title, setTitle] = useState<string>('');
   const [selectedCategories, setSelectedCategories] = useState<{id:number, name:string}[]>([]);
@@ -124,8 +123,6 @@ const EditArticle = () => {
         mode='edit'
         title={title}
         setTitle={setTitle}
-        // categories={categories}
-        // setCategories={setCategories}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
         content={content}
