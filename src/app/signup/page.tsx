@@ -46,7 +46,7 @@ const Signup = ()=> {
                         placeholder='name@company.com'
                         required
                         onChange={(e) => setEmail(e.target.value)}
-                        vallue={email}      
+                        value={email}      
                     />
                 </div>
                 <div>
