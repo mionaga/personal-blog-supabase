@@ -54,7 +54,7 @@ const ArticleForm = ({
       await setThumbnailUrl(publicUrl);
     }
     fetchImage();
-  }, [thumbnailImageKey])
+  }, [thumbnailImageKey, setThumbnailUrl])
 
   return (
     <div className='min-h-screen sm:px-4'>
