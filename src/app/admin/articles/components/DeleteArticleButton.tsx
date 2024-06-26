@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 type DeleteButtonProps = {
-    id: string;
+    id: number;
 }
 
 const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
