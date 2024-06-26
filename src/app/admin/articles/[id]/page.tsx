@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import DeleteArticleButton from '../components/DeleteArticleButton';
 import { getAdminArticle } from '@/app/getters';
 import { notFound, useParams, useRouter } from 'next/navigation'
