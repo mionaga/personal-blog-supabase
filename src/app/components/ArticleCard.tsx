@@ -27,7 +27,7 @@ const ArticleCard = ({ article }:ArticleCardProps) => {
             <span className='text-blue-700 pb-4 font-bold'>
                 {article.articleCategories.map((ac) => (
                     <div key={ac.category.id}>
-                        <SelectedCategory category={ac} />
+                        <SelectedCategory category={ac.category} />
                     </div>
                 ))}
             </span>
