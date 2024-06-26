@@ -61,7 +61,7 @@ const Signup = ()=> {
                         placeholder='•••••••••'
                         required
                         onChange={(e) => setPassword(e.target.value)}
-                        vallue={password}      
+                        value={password}      
                     />
                 </div>
                 
