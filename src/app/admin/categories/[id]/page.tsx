@@ -20,7 +20,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
   useEffect(() => {
     const fetchCategory = async () => {
       const categories = await getCategories();
-      const editCategory = categories.filter((e: Category) => (id == e.id))
+      const editCategory = await categories.filter((e: Category) => (Number(id) === e.id))
       setName(editCategory[0].name);
     }
     fetchCategory();
