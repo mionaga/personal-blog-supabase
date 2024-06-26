@@ -34,13 +34,13 @@ const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
     }
 
   return (
-    <div
+    <button
     className='text-red-700 hover:text-red-600 font-semibold text-lg cursor-pointer'
     onClick={handleRemove}
     disabled={loading}
     >
       {loading? '削除中...' : '削除'}
-    </div>
+    </button>
   )
 }
 
