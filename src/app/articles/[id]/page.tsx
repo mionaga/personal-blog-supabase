@@ -66,7 +66,7 @@ export default async function ArticleDetail({
         <div className="text-lg align-middle whitespace-break-spaces leading-relaxed text-justify px-4 mb-3">{article.content}</div>
         <div className='p-2 flex justify-end mt-6'>
           <Link href='/'>
-            <p className=' bg-slate-200 p-3 rounded-full'>ブログ一覧ページへ戻る</p>  
+            <p className=' bg-slate-200 p-3 rounded-full'>ブログ一覧ページへ</p>  
           </Link>
         </div>
       </div>

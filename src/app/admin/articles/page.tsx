@@ -12,7 +12,8 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
   const perPage = 10;
 
   const articlesData = await getAdminArticles();
-  const totalArticles = articlesData.length;
+  console.log(articlesData)
+  const totalArticles = await articlesData.length;
   const totalPages = Math.ceil(totalArticles / perPage);
   const articles = articlesData.slice((currentPage - 1) * perPage, currentPage * perPage);
 

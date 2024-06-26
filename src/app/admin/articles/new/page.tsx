@@ -82,6 +82,7 @@ const CreateArticles = () => {
       const createdArticle = await response.json();
       const newArticleId = createdArticle.id;
 
+      alert('記事の投稿に成功しました。')
       setLoading(false);
       router.push(`/articles/${newArticleId}`);
       router.refresh();

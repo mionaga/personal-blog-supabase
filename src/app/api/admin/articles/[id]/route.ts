@@ -102,13 +102,18 @@ export const DELETE = async (
         return NextResponse.json({ status: error.message }, { status: 400 })
 
     try {
-        await prisma.article.delete({
+        const article = await prisma.article.findUnique({
+            where: {
+                id: parseInt(id)
+            },
+        })
+         await prisma.article.delete({
             where: {
                 id: parseInt(id),
             },
         })
 
-        return NextResponse.json({ status: 'OK' }, { status: 200 })
+        return NextResponse.json({ status: 'OK', article }, { status: 200 })
     } catch (error) {
         if (error instanceof Error)
             return NextResponse.json({ status: error.message }, { status: 400 })
