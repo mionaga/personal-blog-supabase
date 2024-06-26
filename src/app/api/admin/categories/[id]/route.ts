@@ -39,7 +39,7 @@ export const PUT = async (
 }
 
 export const DELETE = async (
-    req: NextResponse,
+    req: NextRequest,
     { params }: { params: { id: string } },
 ) => {
     const token = req.headers.get('Authorization') ?? '';
