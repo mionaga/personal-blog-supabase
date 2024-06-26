@@ -97,6 +97,12 @@ const EditArticle = () => {
       thumbnailImageKey
     };
 
+    if (!token) {
+      setErrors({ authorization: 'トークンが存在しません。ログインしてください。' });
+      setLoading(false);
+      return;
+    }
+
      try {
       const res = await fetch(`/api/admin/articles/${id}`, {
         method: 'PUT',
