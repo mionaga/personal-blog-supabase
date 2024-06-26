@@ -40,7 +40,7 @@ const CategoriesIndex = async () => {
                 <button  className='text-amber-600 hover:text-amber-800 font-semibold text-lg cursor-pointer'>
                   <Link href={`/admin/categories/${category.id}`} key={category.id}>編集</Link>
                 </button>
-                <DeleteCategoryButton id={category.id} />
+                <DeleteCategoryButton id={category.id.toString()} />
                 
               </div>
              
