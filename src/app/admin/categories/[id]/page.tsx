@@ -23,7 +23,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
       setName(editCategory[0].name);
     }
     fetchCategory();
-  },[])
+  },[IDBDatabase])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

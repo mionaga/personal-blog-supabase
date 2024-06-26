@@ -49,7 +49,7 @@ export const PUT = async (
     const id = params.id;
     const { title, content, categories, thumbnailImageKey } = await req.json()
 
-    console.log('Received PUT data:', { title, content, categories, thumbnailImageKey });
+    // console.log('Received PUT data:', { title, content, categories, thumbnailImageKey });
 
     if (!title || !content || !categories || !thumbnailImageKey) {
         return NextResponse.json({ status: 'Bad Request', message: 'Missing required fields' }, { status: 400 });

@@ -53,7 +53,7 @@ const ArticleForm = ({
         .from('article_thumbnail')
         .getPublicUrl(thumbnailImageKey)
 
-      setThumbnailUrl(publicUrl);
+      await setThumbnailUrl(publicUrl);
     }
     fetchImage();
   }, [thumbnailImageKey])
