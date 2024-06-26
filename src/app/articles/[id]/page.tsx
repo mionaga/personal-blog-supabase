@@ -13,9 +13,12 @@ export async function generateMetadata ({
   params,
 }: {
   params: { id: string };
-  parent?: ResolvingMetadata;
 }): Promise<Metadata> {
   const article = await getArticle(params.id);
+
+  if (!article) {
+    throw new Error(`Article with ID ${params.id} not found`);
+  }
 
   return {
     title: article?.title,
