@@ -16,6 +16,12 @@ const DeleteCategoryButton = ({ id }: DeleteCategoryButtonProps) => {
     const handleRemove = async () => {
         setLoading(true);
 
+        if (!token) {
+          console.error('Error: Authorization token is missing');
+          setLoading(false);
+          return;
+        }
+
         await fetch(`/api/admin/categories/${id}`, { 
           method: 'DELETE',
           headers: {
