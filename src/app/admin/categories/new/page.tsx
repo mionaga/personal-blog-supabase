@@ -23,6 +23,12 @@ const NewCategory = () => {
       return;
     }
 
+    if (!token) {
+      console.error('Error: Authorization token is missing');
+      setLoading(false);
+      return;
+    }
+
     setErrors({});
     setLoading(true);
 
