@@ -16,9 +16,9 @@ export async function generateMetadata ({
 }): Promise<Metadata> {
   const article = await getArticle(params.id);
 
-  if (!article) {
-    throw new Error(`Article with ID ${params.id} not found`);
-  }
+  // if (!article) {
+  //   throw new Error(`Article with ID ${params.id} not found`);
+  // }
 
   return {
     title: article?.title,
@@ -41,7 +41,7 @@ export default async function ArticleDetail({
     notFound();
   }
 
-  const categoryIds:number[] = article.articleCategories.map((ac:ArticleCategory) => ac.categoryId);
+  const categoryIds:number[] = await article.articleCategories.map((ac:ArticleCategory) => ac.categoryId);
   const categoryNames = await categories
     .filter((c: Category) => categoryIds.includes(c.id))
     .map((c: Category) => c.name);

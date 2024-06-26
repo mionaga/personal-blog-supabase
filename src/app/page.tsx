@@ -28,7 +28,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
   let filteredArticles = articleData;
 
   if (categoryId) {
-    filteredArticles = articleData.filter((article: Article) => 
+    filteredArticles = await articleData.filter((article: Article) => 
       article.articleCategories.some(ac => ac.categoryId === categoryId)
     );
   }

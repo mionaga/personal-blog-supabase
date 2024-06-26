@@ -41,7 +41,7 @@ export const PUT = async (
     req: Request,
     { params }: { params: { id: string } }, 
 ) => {
-    const token = req.headers.get('Authorization') ?? ''
+    const token = req.headers.get('Authorization')
     const { error } = await supabase.auth.getUser(token);
     if (error)
         return NextResponse.json({ status: error.message }, { status: 400 });

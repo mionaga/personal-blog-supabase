@@ -23,7 +23,7 @@ const EditArticle = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { token } = useSupabaseSessions();
  
-  useEffect(() => {
+  useEffect(() => { 
       const fetchArticle = async () => {
       const article = await getAdminArticle(id);
       if (!article) {
@@ -108,7 +108,7 @@ const EditArticle = () => {
       });
       const updatedArticle = await res.json();
       setLoading(false);
-      await router.push(`/articles/${id}?updated=true`);
+      await router.push(`/articles/${id}`);
     
       router.refresh();
      } catch (error) {
