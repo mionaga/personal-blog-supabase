@@ -1,5 +1,7 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
 export const getArticles = async () => {
-    const res = await fetch('/api/articles', { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/api/articles`, { cache: 'no-store' });
     if (!res.ok) {
       const errorText = await res.text();
       throw new Error(`Failed to fetch articles: ${errorText}`);
@@ -9,7 +11,7 @@ export const getArticles = async () => {
 }
 
 export const getArticle = async (id: string) => {
-    const res = await fetch(`/api/articles/${id}`, {
+    const res = await fetch(`${API_URL}/api/articles/${id}`, {
         next: { revalidate: 60 },
     });
     if (!res.ok) {
@@ -20,7 +22,7 @@ export const getArticle = async (id: string) => {
 }
 
 export const getAdminArticles = async () => {
-    const res = await fetch('/api/admin/articles', { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/api/admin/articles`, { cache: 'no-store' });
     if (!res.ok) {
         throw new Error('Failed to fetch admin articles');
     }
@@ -29,7 +31,7 @@ export const getAdminArticles = async () => {
 }
 
 export const getAdminArticle = async (id: string) => {
-    const res = await fetch(`/api/admin/articles/${id}`);
+    const res = await fetch(`${API_URL}/api/admin/articles/${id}`);
     if (!res.ok) {
         throw new Error(`Failed to fetch admin article with id ${id}`);
     }
@@ -38,7 +40,7 @@ export const getAdminArticle = async (id: string) => {
 }
 
 export const getCategories = async () => {
-    const res = await fetch('/api/admin/categories', { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/api/admin/categories`, { cache: 'no-store' });
     if (!res.ok) {
         throw new Error('Failed to fetch categories');
     }
