@@ -114,6 +114,7 @@ const EditArticle = () => {
       });
       const updatedArticle = await res.json();
       setLoading(false);
+      alert('記事の更新に成功しました。');
       await router.push(`/articles/${id}`);
     
       router.refresh();
