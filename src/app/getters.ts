@@ -1,4 +1,4 @@
-const API_URL = process.env.PORT || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3000';
 
 export const getArticles = async () => {
     const res = await fetch(`${API_URL}/api/articles`, { cache: 'no-store' });
