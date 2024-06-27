@@ -18,7 +18,7 @@ const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
     const handleRemove = async () => {
         if (!token) return;
         setLoading(true);
-        const res =await fetch(`http://localhost:3000//api/admin/articles/${id}`, { 
+        const res =await fetch(`/api/admin/articles/${id}`, { 
           method: 'DELETE',
           headers: {
             'Authorization': token,
