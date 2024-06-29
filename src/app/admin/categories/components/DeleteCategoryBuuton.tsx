@@ -31,6 +31,7 @@ const DeleteCategoryButton = ({ id }: DeleteCategoryButtonProps) => {
         });
 
         setLoading(false);
+        alert('カテゴリーを削除しました。')
         router.push('/admin/categories');
         router.refresh();
     }

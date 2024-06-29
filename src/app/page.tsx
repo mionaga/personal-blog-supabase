@@ -42,14 +42,6 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
 })
 
   // const articleData = await getArticles();
-  // const API_URL = process.env.NEXT_PUBLIC_API_BASEURL || 'http://localhost:3000';
-
-  // const res =  await fetch(`${API_URL}/api/articles`, { cache: 'no-store' });
-  // if (!res.ok) {
-  //   const errorText = await res.text();
-  //   throw new Error(`Failed to fetch articles: ${errorText}`);
-  // }
-  // const articleData = await res.json();
   const categoryData = await getCategories();
 
   console.log('データ', articleData);

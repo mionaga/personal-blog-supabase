@@ -4,6 +4,8 @@ import DeleteCategoryButton from './components/DeleteCategoryBuuton';
 import Link from 'next/link';
 import React from 'react'
 
+export const revalidate = 0;
+
 const CategoriesIndex = async () => {
     const categories: Category[] = await getCategories();
 

@@ -54,6 +54,7 @@ const EditCategory = ({params}: {params: { id: string }}) => {
     });
 
     setLoading(false);
+    alert('カテゴリーの編集に成功しました。')
     router.push('/admin/categories');
     router.refresh();
   } 

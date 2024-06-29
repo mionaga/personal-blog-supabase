@@ -6,6 +6,7 @@ import ImageFetcher from '@/app/components/ImageFetcher'
 import Pagination from './components/Pagination'
 import { Article } from '@/types/article'
 
+export const revalidate = 0;
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | undefined> }) {
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;

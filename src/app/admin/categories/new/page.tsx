@@ -42,6 +42,7 @@ const NewCategory = () => {
     })
     
     setLoading(false);
+    alert('新しいカテゴリーの登録に成功しました。')
     router.push('/admin/categories');
     router.refresh();
   }
