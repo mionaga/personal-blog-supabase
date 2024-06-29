@@ -23,7 +23,7 @@ https://personal-blog-supabase.vercel.app/signup
 ![MUI](https://img.shields.io/badge/MUI-v5.15.20-paleblue)
 ![Supabase](https://img.shields.io/badge/Supabase-v2.43.5-yellow)
 ![UUID](https://img.shields.io/badge/UUID-v10.0.0-brown)
-![PostCSS](https://img.shields.io/badge/PostCSS-v8-black)
+![PostCSS](https://img.shields.io/badge/PostCSS-v8-indigo)
 ![Prisma](https://img.shields.io/badge/Prisma-v5.15.1-indigo)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4.1-palegreen)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v5.4.5-blue)
