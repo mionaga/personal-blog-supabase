@@ -44,8 +44,6 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
   // const articleData = await getArticles();
   const categoryData = await getCategories();
 
-  console.log('データ', articleData);
- 
   let filteredArticles = await articleData;
 
   if (categoryId) {
