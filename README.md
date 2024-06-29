@@ -1,24 +1,40 @@
+<img src="https://github.com/mionaga/personal-blog-supabase/assets/143914849/a21b5010-8f6e-402b-84bd-a6ff8063bd72" alt="blog image" height="300">
 
-![“1”の背景が削除されました](https://github.com/mionaga/personal-blog-supabase/assets/143914849/a21b5010-8f6e-402b-84bd-a6ff8063bd72)
-
-##  プロジェクトの概要
-
-
-
-###  プロジェクト名
+###  サイト名
 personal-blog-supabase
-
-
-###  プロジェクトの概要
+#  サイトの概要
 シンプルな個人ブログサイトです。
-投稿記事をカテゴリーわけすることで、整理しやすい仕様としました。
+投稿記事をカテゴリー分けすることで、整理しやすい仕様としました。
+
+##  サービスのURL
+https://personal-blog-supabase.vercel.app
+
+##  テスト用アカウント
+-  メールアドレス：　itokona727@gmail.com
+-  パスワード：　adminadmin
+
+##  (サービスのサインアップURL)
+https://personal-blog-supabase.vercel.app/signup
+
+## 使用技術
+![Node.js](https://img.shields.io/badge/Node.js-v21.5.0-brightgreen)
+![React](https://img.shields.io/badge/React-v18-blue)
+![Next.js](https://img.shields.io/badge/Next.js-v14.2.3-red)
+![MUI](https://img.shields.io/badge/MUI-v5.15.20-paleblue)
+![Supabase](https://img.shields.io/badge/Supabase-v2.43.5-yellow)
+![UUID](https://img.shields.io/badge/UUID-v10.0.0-brown)
+![PostCSS](https://img.shields.io/badge/PostCSS-v8-black)
+![Prisma](https://img.shields.io/badge/Prisma-v5.15.1-indigo)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4.1-palegreen)
+![TypeScript](https://img.shields.io/badge/TypeScript-v5.4.5-blue)
+
+##  使用素材
+フリー素材としてPixabay,Unsplashを使用
 
 
+####  This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
+#### Getting Started
 
 First, run the development server:
 
