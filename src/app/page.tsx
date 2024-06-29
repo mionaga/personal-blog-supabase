@@ -4,6 +4,7 @@ import Pagination from './components/Pagination';
 import { getArticles, getCategories } from "./getters";
 import { Category } from "@/types/category";
 import { Article } from "@/types/article";
+import { articleValidate } from "./admin/articles/components/PostingValidate";
 
 type HomeProps = {
   articles: Article[];
@@ -22,10 +23,10 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
 
 
 
-  const [articleData, categoryData] = await Promise.all([
-    getArticles(),
-    getCategories()
-  ]);
+  const articleData = await getArticles();
+  const categoryData = await getCategories();
+ 
+  console.log('aaaaa:', articleData);
 
   let filteredArticles = await articleData;
 
