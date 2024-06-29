@@ -26,7 +26,7 @@ const DeleteArticleButton = ({ id }: DeleteButtonProps) => {
         });
 
         const data = await res.json();
-        alert(`「${data.article.title}」のブログ記事を削除しました。`)
+        alert('ブログ記事を削除しました。')
         setLoading(false);
 
         await router.push('/admin/articles');

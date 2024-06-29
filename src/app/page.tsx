@@ -13,10 +13,14 @@ type HomeProps = {
   perPage: number;
 };
 
+export const revalidate = 0;
+
 const Home = async ({ searchParams }: { searchParams: { [key: string]: string } }) => {
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const categoryId = searchParams.category ? parseInt(searchParams.category) : null;
   const perPage = 5;
+
+
 
   const [articleData, categoryData] = await Promise.all([
     getArticles(),
