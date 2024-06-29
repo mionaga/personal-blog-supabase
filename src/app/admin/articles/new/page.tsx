@@ -84,8 +84,8 @@ const CreateArticles = () => {
 
       alert('記事の投稿に成功しました。')
       setLoading(false);
-      router.push(`/articles/${newArticleId}`);
       router.refresh();
+      router.push(`/articles/${newArticleId}`);
     } catch (error) {
       console.error('Error creating article:', error);
       setLoading(false);
