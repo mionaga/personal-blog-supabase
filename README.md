@@ -1,3 +1,17 @@
+##  プロジェクトの概要
+
+
+###  プロジェクト名
+personal-blog-supabase
+
+
+###  プロジェクトの概要
+シンプルな個人ブログサイトです。
+投稿記事をカテゴリーわけすることで、整理しやすい仕様としました。
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
