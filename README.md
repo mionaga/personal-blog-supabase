@@ -31,6 +31,10 @@ https://personal-blog-supabase.vercel.app/signup
 ##  使用素材
 フリー素材としてPixabay,Unsplashを使用
 
+##  ER図
+
+<img width="554" alt="スクリーンショット 2024-06-30 0 27 11" src="https://github.com/mionaga/personal-blog-supabase/assets/143914849/eab3683d-7a0f-4c86-9103-9bfd7f0c7c88">
+
 
 ####  This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
