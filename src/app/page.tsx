@@ -5,6 +5,7 @@ import { getArticles, getCategories } from "./getters";
 import { Category } from "@/types/category";
 import { Article } from "@/types/article";
 import { articleValidate } from "./admin/articles/components/PostingValidate";
+import { prisma } from "../../prisma/prisma";
 
 type HomeProps = {
   articles: Article[];
@@ -22,8 +23,25 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
   const perPage = 5;
 
 
+  const articleData = await prisma.article.findMany({
+    include: {
+        articleCategories: {
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+            },
+        },
+    },
+    orderBy: {
+        createdAt: 'desc',
+    },
+})
 
-  const articleData = await getArticles();
+  // const articleData = await getArticles();
   const categoryData = await getCategories();
  
   console.log('aaaaa:', articleData);
