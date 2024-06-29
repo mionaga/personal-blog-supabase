@@ -22,7 +22,7 @@ export const GET = async (req: Request) => {
                 createdAt: 'desc',
             },
         })
-
+        console.log(articles);
         return NextResponse.json({ status: 'OK', articles: articles }, { status: 200 }) 
     } catch (error) {
         if (error instanceof Error)
