@@ -23,7 +23,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
   const perPage = 5;
 
 
-  const articleData = await prisma.article.findMany({
+  const articleData:any[] = await prisma.article.findMany({
     include: {
         articleCategories: {
             include: {
